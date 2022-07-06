@@ -34,7 +34,6 @@ void blend(){
     cv::imshow("image1", image1);
     cv::imshow("image2", image2);
     cv::imshow("blender", blender);
-    cv::waitKey(0);
 }
 
 
@@ -64,6 +63,7 @@ void hsv(){
                 float g = image.at<cv::Vec3b>(row, col)[1];
                 float r = image.at<cv::Vec3b>(row, col)[2];
                 //cout << b << " " << g << " " << r << endl;
+                //cout << b * alpha + beta << endl; //123.8
                 dst.at<cv::Vec3b>(row, col)[0] = b * alpha + beta;
                 dst.at<cv::Vec3b>(row, col)[1] = g * alpha + beta;
                 dst.at<cv::Vec3b>(row, col)[2] = r * alpha + beta;
@@ -73,12 +73,12 @@ void hsv(){
 
     cv::imshow("src", image);
     cv::imshow("dst", dst);
-    cv::waitKey(0);
 }
 
 
 int main(){
     //blend();
     hsv();
+    cv::waitKey(0);
     return 0;
 }

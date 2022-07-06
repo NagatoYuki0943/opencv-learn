@@ -39,7 +39,6 @@ void create(){
     // 这样重新设置颜色
     dst2 = cv::Scalar(127,127, 80);
     cv::imshow("dst2_1", dst2);
-    cv::waitKey(0);
 }
 
 
@@ -55,7 +54,6 @@ void clone(){
     //dst = src.clone();
     src.copyTo(dst);
     cv::imshow("dst", dst);
-    cv::waitKey(0);
 }
 
 
@@ -92,7 +90,7 @@ void ptr(){
  * 自定义数组
  */
 void cvarray(){
-    cv::Mat c = (cv::Mat_<double >(3, 3) << 0, -1, 0, -1, 5, -1 , 0, -1, 0);
+    cv::Mat c = (cv::Mat_<double>(3, 3) << 0, -1, 0, -1, 5, -1 , 0, -1, 0);
     cout << c << endl;
     // [0, -1, 0;
     //  -1, 5, -1;
@@ -106,5 +104,6 @@ int main(){
     //info();
     //ptr();
     cvarray();
+    cv::waitKey(0);
     return 0;
 }

@@ -32,7 +32,6 @@ void point_scalar(){
     cv::Mat image = cv::Mat(500, 500, CV_8UC3);
     image = scalar; //赋值添加颜色
     cv::imshow("cyan", image);
-    cv::waitKey(0);
 }
 
 
@@ -48,7 +47,6 @@ void line(){
     cv::line(image, p1, p2, color, 2, cv::LINE_4);
     cv::line(image, {280, 50}, {50, 80}, {65, 85, 80}, 2, cv::LINE_4);
     cv::imshow("line", image);
-    cv::waitKey(0);
 }
 
 
@@ -70,9 +68,8 @@ void rectangle(){
     cv::rectangle(image, cv::Point(50, 20), cv::Point(200, 200), color, 2, cv::LINE_8);
 
     // 线宽设置为FILLED是填充区域
-    cv::rectangle(image, cv::Point(0, 0), cv::Point(100, 100), {255, 0, 0}, cv::FILLED);
+    cv::rectangle(image, {0, 0}, {100, 100}, {255, 0, 0}, cv::FILLED);
     cv::imshow("dst", image);
-    cv::waitKey(0);
 }
 
 
@@ -92,12 +89,11 @@ void oval(){
     // 线宽设置为FILLED是填充区域
     cv::ellipse(image, center, {30, 80}, 180, 0, 360, {0, 255, 0}, cv::FILLED);
     cv::imshow("dst", image);
-    cv::waitKey(0);
 }
 
 
 /**
- * 绘制原型
+ * 绘制圆形
  * circle(image, center, radius, color, 线宽, 线型)
  * circle(image, center, radius, color, cv::FILLED) 填充区域
  */
@@ -111,7 +107,6 @@ void circle(){
     cv::circle(image, {100, 100}, 50, {255, 255, 255}, cv::FILLED);
 
     cv::imshow("dst", image);
-    cv::waitKey(0);
 }
 
 
@@ -123,6 +118,8 @@ void text(){
     auto image = getImage();
 
     string text = "Confidence Score: 0.95";
+
+    //计算文字所占面积宽高
     int font_size = image.cols / 400 + 1;
     cout << "font size:" << font_size << endl;
     int baseline = 0;
@@ -136,7 +133,6 @@ void text(){
     cv::putText(image, text, cv::Point(0, textsize.height + 5), cv::FONT_HERSHEY_PLAIN, font_size, cv::Scalar(0, 0, 0), thickness);
 
     cv::imshow("dst", image);
-    cv::waitKey(0);
 }
 
 
@@ -149,16 +145,16 @@ void random(){
     cv::Mat bg = cv::Mat::zeros({800, 800}, CV_8UC3);
     for (int i = 0; i < 20; ++i) {
         pt1.x = rng.uniform(0, bg.cols);
-        pt1.y = rng.uniform(0, bg.cols);
-        pt2.x = rng.uniform(0, bg.rows);
+        pt1.y = rng.uniform(0, bg.rows);
+        pt2.x = rng.uniform(0, bg.cols);
         pt2.y = rng.uniform(0, bg.rows);
         cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::line(bg, pt1, pt2, color, 1, 8);
         cv::imshow(to_string(i + 1), bg);
         cv::waitKey(0);
     }
-
 }
+
 
 int main(){
     //point_scalar();
@@ -168,5 +164,6 @@ int main(){
     //circle();
     //text();
     random();
+    cv::waitKey(0);
     return 0;
 }

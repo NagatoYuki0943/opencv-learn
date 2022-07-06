@@ -48,7 +48,7 @@ void singleChannelInvert(){
 
     cv::Mat gray1 = cv::Mat(gray.size(), gray.type());
     int rows = gray.rows;
-    int cols  = gray.cols;
+    int cols = gray.cols;
 
     for(int row = 0; row < rows; ++row){
         for (int col = 0; col < cols; ++col) {
@@ -59,7 +59,6 @@ void singleChannelInvert(){
 
     cv::imshow("src", gray);
     cv::imshow("dst", gray1);
-    cv::waitKey(0);
 }
 
 
@@ -88,7 +87,6 @@ void multiChannelInvert(){
                 uchar g = src.at<uchar>(row, col);
                 src.at<uchar>(row, col) = 255 - g;
             }else{
-                //有错误, 没有 cv::Vec3f 函数的实现
                 uchar b = src.at<cv::Vec3b>(row, col)[0];
                 uchar g = src.at<cv::Vec3b>(row, col)[1];
                 uchar r = src.at<cv::Vec3b>(row, col)[2];
@@ -101,7 +99,6 @@ void multiChannelInvert(){
 
     cv::imshow("src", src);
     cv::imshow("dst", dst);
-    cv::waitKey(0);
 }
 
 
@@ -126,8 +123,6 @@ void uchar_float(){
     cv::imshow("2", image);
     image.convertTo(image, CV_32FC3);
     cv::imshow("3", image);
-
-    cv::waitKey(0);
 }
 
 
@@ -136,5 +131,6 @@ int main(){
     //singleChannelInvert();
     multiChannelInvert();
     //uchar_float();
+    cv::waitKey(0);
     return 0;
 }

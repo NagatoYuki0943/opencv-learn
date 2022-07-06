@@ -29,9 +29,9 @@ void basic(){
     auto src = getImage();
 
     cv::Mat dst;
-    cv::cvtColor(src, dst, cv::COLOR_BGR2RGB);              // 变换色域
+    cv::cvtColor(src, dst, cv::ColorConversionCodes::COLOR_BGR2RGB);              // 变换色域, 可以选择具体的Codes: ColorConversionCodes
+    //cv::cvtColor(src, dst, cv::COLOR_BGR2RGB);
     cv::imshow("squirrel", dst);                    // 显示图片
-    cv::waitKey();
     cv::imwrite("../images/squirrel_bgr.jpg", dst);
 }
 
@@ -68,8 +68,6 @@ void mask(){
 
     //cv::namedWindow("Transform", cv::WINDOW_AUTOSIZE);
     imshow("Transform", dst);
-
-    cv::waitKey(0);
 }
 
 
@@ -93,12 +91,12 @@ void scalar(){
     cv::imshow("R", img3);
 
     cv::Scalar color4 = cv::Scalar::all(255);
-    cv::Mat img4 = cv::Mat(500, 500, CV_8UC3, color4);
+    cv::Mat img4 = cv::Mat(500, 500, CV_8UC3);
+    img4 = color4;  //直接通过等号赋值颜色
     cv::imshow("W", img4);
 
     cv::Mat img5 = cv::Mat(500, 500, CV_8UC3, {56, 85, 129});
     cv::imshow("S", img5);
-    cv::waitKey(0);
 }
 
 
@@ -112,7 +110,6 @@ void zero_one(){
     auto image2 = cv::Mat::ones(500, 500, CV_32FC1);
     cout << image2 << endl;
     cv::imshow("ones", image2);
-    cv::waitKey(0);
 }
 
 
@@ -121,5 +118,6 @@ int main(){
     //mask();
     scalar();
     //zero_one();
+    cv::waitKey(0);
     return 0;
 }
