@@ -1,3 +1,5 @@
+//https://blog.csdn.net/Cream_Cicilian/article/details/105469092
+
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
@@ -133,10 +135,10 @@ void bilateral(){
 
 
 int main(){
-    //blur();
+    blur();
     //gauss();
     //median();
-    bilateral();
+    //bilateral();
     cv::waitKey(0);
     return 0;
 }

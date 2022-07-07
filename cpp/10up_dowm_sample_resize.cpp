@@ -1,3 +1,5 @@
+//https://blog.csdn.net/Cream_Cicilian/article/details/105524521
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui_c.h>
 #include <iostream>
@@ -53,6 +55,39 @@ void pry_up_down(){
     cv::imshow("upImg", upImg);
     cv::imshow("downImg", downImg);
 }
+
+
+/**
+ * resize
+ * @param src           源图
+ * @param dst_height    目标高
+ * @param dst_width     目标宽
+ * @param interpolation 上采样方式
+ * @return
+ */
+cv::Mat resize(const cv::Mat& src, int dst_height, int dst_width, const std::string& interpolation) {
+    cv::Mat dst(dst_height, dst_width, src.type());
+    if (interpolation == "bilinear") {
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LINEAR);
+    }
+    else if (interpolation == "nearest") {
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_NEAREST);
+    }
+    else if (interpolation == "area") {
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_AREA);
+    }
+    else if (interpolation == "bicubic") {
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_CUBIC);
+    }
+    else if (interpolation == "lanczos") {
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LANCZOS4);
+    }
+    else {
+        assert(0);
+    }
+    return dst;
+}
+
 
 int main(){
     gauss_diff();

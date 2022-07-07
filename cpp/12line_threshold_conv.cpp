@@ -1,3 +1,5 @@
+//https://blog.csdn.net/Cream_Cicilian/article/details/105524521
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui_c.h>
 #include <iostream>
@@ -29,7 +31,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  */
 void conv() {
     auto src = getImage();
-    cv::Mat dst_robert_x, dst_robert_y, dst_sober_x, dst_sober_y, dst_laplace;
+    cv::Mat dst_robert_x, dst_robert_y, dst_sobel_x, dst_sobel_y, dst_laplace;
 
     // Robert算子 x轴方向
     cv::Mat robert_kernel_x = (cv::Mat_<int>(2, 2) << 1, 0, 0, -1);
@@ -39,11 +41,11 @@ void conv() {
     cv::filter2D(src, dst_robert_y, -1, robert_kernel_y, {-1, -1}, 0.0);
 
     // Sobel算子 x轴方向
-    cv::Mat sober_kernel_x = (cv::Mat_<int>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);
-    cv::filter2D(src, dst_sober_x, -1, sober_kernel_x, {-1, -1}, 0.0);
+    cv::Mat sobel_kernel_x = (cv::Mat_<int>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);
+    cv::filter2D(src, dst_sobel_x, -1, sobel_kernel_x, {-1, -1}, 0.0);
     // Sobel算子 y轴方向
-    cv::Mat sober_kernel_y = (cv::Mat_<int>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
-    cv::filter2D(src, dst_sober_y, -1, sober_kernel_y, {-1, -1}, 0.0);
+    cv::Mat sobel_kernel_y = (cv::Mat_<int>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
+    cv::filter2D(src, dst_sobel_y, -1, sobel_kernel_y, {-1, -1}, 0.0);
 
     //拉普拉斯算子
     cv::Mat laplace_kernel_y = (cv::Mat_<int>(3, 3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
@@ -52,8 +54,8 @@ void conv() {
     cv::imshow("src",           src);
     cv::imshow("dst_robert_x",  dst_robert_x);
     cv::imshow("dst_robert_y",  dst_robert_y);
-    cv::imshow("dst_sober_x",   dst_sober_x);
-    cv::imshow("dst_sober_y",   dst_sober_y);
+    cv::imshow("dst_sobel_x",   dst_sobel_x);
+    cv::imshow("dst_sobel_y",   dst_sobel_y);
     cv::imshow("dst_laplace",   dst_laplace);
 }
 
@@ -86,12 +88,54 @@ void custom_conv_kernel(){
         index++;
         cv::imshow(OUTPUT_WIN, dst);
     }
-
 }
+
+
+/**
+ * 卷积边界问题
+ * 图像卷积的时候边界像素，不能被卷积操作，原因在于边界像素没有完全跟kernel重叠，所以当3x3滤波时候有1个像素的边缘没有被处理，5x5滤波的时候有2个像素的边缘没有被处理。
+ *
+ * 处理边缘
+ *  在卷积开始之前增加边缘像素，填充的像素值为0或者RGB黑色，比如3x3在
+ *  四周各填充1个像素的边缘，这样就确保图像的边缘被处理，在卷积处理之
+ *  后再去掉这些边缘。openCV中默认的处理方法是： BORDER_DEFAULT，此外
+ *  常用的还有如下几种：
+ *      BORDER_CONSTANT – 填充边缘用指定像素值
+ *      BORDER_REPLICATE – 填充边缘像素用已知的边缘像素值。
+ *      BORDER_WRAP – 用另外一边的像素来补偿填充
+ *
+ *  copyMakeBorder（
+ *      - Mat src, // 输入图像
+ *      - Mat dst, // 添加边缘图像
+ *      - int top, // 边缘长度，一般上下左右都取相同值，
+ *      - int bottom,
+ *      - int left,
+ *      - int right,
+ *      - int borderType // 边缘类型
+ *      - Scalar value   // 颜色 BORDER_CONSTANT需要指定
+）
+ */
+void verge(){
+    auto src = getImage();
+    cv::Mat constant, replicate, wrap, reflect;
+    cv::copyMakeBorder(src, constant, 3, 3, 3, 3, cv::BorderTypes::BORDER_CONSTANT, {0,0,255});
+    cv::copyMakeBorder(src, replicate, 3, 3, 3, 3, cv::BorderTypes::BORDER_REPLICATE);
+    cv::copyMakeBorder(src, wrap, 3, 3, 3, 3, cv::BorderTypes::BORDER_WRAP);
+    cv::copyMakeBorder(src, reflect, 3, 3, 3, 3, cv::BorderTypes::BORDER_REFLECT);
+    cv::imshow("src",       src);
+    cv::imshow("constant",  constant);
+    cv::imshow("replicate", replicate);
+    cv::imshow("constant",  constant);
+    cv::imshow("reflect",   reflect);
+}
+
+
+
 
 int main(){
     //conv();
-    custom_conv_kernel();
+    //custom_conv_kernel();
+    verge();
     cv::waitKey(0);
     return 0;
 }
