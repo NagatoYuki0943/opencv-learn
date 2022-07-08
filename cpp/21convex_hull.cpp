@@ -46,16 +46,16 @@ void convex_hull(){
     auto src = getImage("../images/94147214_p0.png");
     cv::Mat blur, gray, canny;
 
-    /* 第一步：高斯模糊 */
+    /* 第一步：高斯模糊 不一定需要 */
     cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
-    /* 第三步：Canny - 高低阈值输出二值图像 */
+    /* 第三步：Canny - 高低阈值输出二值图像边缘 */
     cv::Canny(gray, canny, 85, 255, 3, false);
 
     /* 第四步：使用findContours寻找轮廓 */
-    vector<vector<cv::Point>> contours;
-    vector<cv::Vec4i> hierarchy;
+    vector<vector<cv::Point>> contours;     // 全部发现的轮廓对象
+    vector<cv::Vec4i> hierarchy;            // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
     auto mode = cv::RetrievalModes::RETR_TREE;
     cv::findContours(canny, contours, hierarchy, mode,
                      cv::CHAIN_APPROX_SIMPLE,cv::Point(0, 0));

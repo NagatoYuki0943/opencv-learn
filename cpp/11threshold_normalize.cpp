@@ -44,6 +44,38 @@ void func() {
 
 
 /**
+ * normalize()
+ * 归一化就是把要处理的数据经过某种算法的处理限制在所需要的范围内。
+ * 首先归一化是为了后面数据处理的方便，其次归一化能够保证程序运行时收敛加快。
+ * 归一化的具体作用是归纳同意样本的统计分布性，归一化在0-1之间是统计的概率分布，
+ * 归一化在某个区间上是统计的坐标分布，在机器学习算法的数据预处理阶段，归一化也是非常重要的步骤。
+ *
+ * 其定义如下：
+ *  void normalize(InputArray src, OutputArray dst, double alpha=1, double beta=0, int norm_type=NORM_L2, int dtype=-1, InputArray mask=noArray())
+ *
+ * 参数解释：
+ *   - InputArray src:      输入图像
+ *   - OutputArray dst:     输出图像，尺寸大小和src相同
+ *   - double alpha = 1:    range normalization模式的最小值
+ *   - double beta = 0:     range normalization模式的最大值，不用于norm normalization(范数归一化)模式
+ *   - int norm_type = NORM_L2: 归一化的类型，主要有
+ *                     NORM_INF: 归一化数组的C-范数（绝对值的最大值）
+ *                     NORM_L1: 归一化数组的L1-范数（绝对值的和）
+ *                     NORM_L2: 归一化数组的L2-范数（欧几里得）
+ *                     NORM_MINMAX: 数组的数值被平移或缩放到一个指定的范围，线性归一化，一般较常用。
+ *   - int dtype = -1:      当该参数为负数时，输出数组的类型与输入数组的类型相同，否则输出数组与输入数组只是通道数相同，而depth = CV_MAT_DEPTH(dtype)
+ *   - InputArray mask = noArray(): 操作掩膜版，用于指示函数是否仅仅对指定的元素进行操作。
+ */
+void normalize(){
+    auto src = getImage();
+    cv::Mat dst;
+    cv::normalize(src, dst, 50, 200, cv::NormTypes::NORM_L2);;
+    cout << dst << endl;
+    cv::imshow("src", src);
+    cv::imshow("dst", dst);
+}
+
+/**
  * 深度学习归一化
  * @brief Do normalization to an image
  *
@@ -99,7 +131,8 @@ void test_normalize(){
 }
 
 int main(){
-    func();
+    //func();
+    normalize();
     //test_normalize();
     cv::waitKey(0);
     return 0;

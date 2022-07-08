@@ -44,23 +44,23 @@ void func(){
     auto src = getImage("../images/94147214_p0.png");
     cv::Mat blur, gray, canny;
 
-    /* 第一步：高斯模糊 */
+    /* 第一步：高斯模糊 不一定需要 */
     cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
-    /* 第三步：Canny - 高低阈值输出二值图像 */
+    /* 第三步：Canny - 高低阈值输出二值图像边缘 */
     cv::Canny(gray, canny, 85, 255, 3, false);
 
     /* 第四步：使用findContours寻找轮廓 */
-    vector<vector<cv::Point>> contours;
-    vector<cv::Vec4i> hierarchy;
+    vector<vector<cv::Point>> contours;     // 全部发现的轮廓对象
+    vector<cv::Vec4i> hierarchy;            // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
     auto mode = cv::RetrievalModes::RETR_TREE;
     cv::findContours(canny, contours, hierarchy, mode,
                      cv::CHAIN_APPROX_SIMPLE,cv::Point(0, 0));
 
     /* 第五步：根据contours计算moments和圆的中心坐标 */
     vector<cv::Moments> contours_moments(contours.size());
-    vector<cv::Point2f> ccs(contours.size());             //圆形坐标
+    vector<cv::Point2f> ccs(contours.size());             //圆形坐标,绘制时只需要它
     for (int i = 0; i < contours.size(); ++i) {
         contours_moments[i] = cv::moments(contours[i]);
         ccs[i] = cv::Point(static_cast<float>(contours_moments[i].m10 / contours_moments[i].m00),
@@ -71,7 +71,6 @@ void func(){
     cv::RNG rng(43);
     cv::Mat drawImg= cv::Mat::zeros(src.size(), CV_8UC3);
     //src.copyTo(drawImg);  //可以在原图绘制
-
     for (int i = 0; i < contours.size(); i++) {
         if (contours[i].size() < 100) {
             continue;
@@ -79,9 +78,10 @@ void func(){
         printf("center point x : %.2f y : %.2f\n", ccs[i].x, ccs[i].y);
         printf("contours %d area : %.2f   arc length : %.2f\n", i,
                contourArea(contours[i]), arcLength(contours[i], true));
+        //随机颜色
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         //绘制Contours轮廓
-        cv::drawContours(drawImg, contours, i, color, 2, 8, hierarchy, 0, {0, 0});
+        cv::drawContours(drawImg, contours, i, color, 1, cv::LINE_8, hierarchy, 0, {0, 0});
         //绘制圆圈
         cv::circle(drawImg, ccs[i], 3, color, 2, cv::LINE_8);
     }

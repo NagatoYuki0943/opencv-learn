@@ -45,22 +45,22 @@ void func(){
     auto src = getImage("../images/94147214_p0.png");
     cv::Mat blur, gray, canny;
 
-    /* 第一步：高斯模糊 */
+    /* 第一步：高斯模糊 不一定需要 */
     cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
-    /* 第三步：Canny - 高低阈值输出二值图像 */
+    /* 第三步：Canny - 高低阈值输出二值图像边缘 */
     cv::Canny(gray, canny, 85, 255, 3, false);
 
     /* 第四步：使用findContours寻找轮廓 */
-    vector<vector<cv::Point>> contours;
-    vector<cv::Vec4i> hierarchy;
+    vector<vector<cv::Point>> contours;     // 全部发现的轮廓对象
+    vector<cv::Vec4i> hierarchy;            // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
     auto mode = cv::RetrievalModes::RETR_TREE;
     cv::findContours(canny, contours, hierarchy, mode,
                      cv::CHAIN_APPROX_SIMPLE,cv::Point(0, 0));
 
-    /* 第五步：找到矩形,圆形,旋转矩形和椭圆的坐标等数据 */
-    vector<vector<cv::Point>> contours_ploy(contours.size());
+    /* 第五步：找到poly,矩形,圆形,旋转矩形和椭圆的坐标等数据 */
+    vector<vector<cv::Point>> contours_ploy(contours.size());   //poly
     vector<cv::Rect>          ploy_rects(contours.size());      //矩形
     vector<cv::Point2f>       ccs(contours.size());             //圆形坐标
     vector<float>             radius(contours.size());          //圆形半径
@@ -68,8 +68,12 @@ void func(){
     vector<cv::RotatedRect>   myellipse(contours.size());       //旋转椭圆
 
     for (int i = 0; i < contours.size(); ++i) {
+        //轮廓周围绘制矩形
         cv::approxPolyDP(cv::Mat(contours[i]), contours_ploy[i], 3, true);
+        //保存矩形数据
         ploy_rects[i] = cv::boundingRect(contours_ploy[i]);
+
+        //轮廓周围绘制圆和椭圆
         cv::minEnclosingCircle(contours_ploy[i], ccs[i], radius[i]);
         if (contours_ploy[i].size() > 5) {
             myellipse[i] = fitEllipse(contours_ploy[i]);
@@ -81,9 +85,9 @@ void func(){
     cv::RNG rng(43);
     cv::Mat drawImg = cv::Mat::zeros(src.size(), src.type());
     //src.copyTo(drawImg);  //可以在原图绘制
-
     cv::Point2f pts[4];
     for (size_t t = 0; t < contours.size(); t++) {
+        //随机颜色
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         //绘制矩形和圆形
         //cv::rectangle(drawImg, ploy_rects[t], color, 2, cv::LINE_8);
@@ -94,7 +98,7 @@ void func(){
             //椭圆
             cv::ellipse(drawImg, myellipse[t], color, 1, cv::LINE_8);
             minRects[t].points(pts);
-            //旋转矩形
+            //旋转矩形,使用直线绘制
             for (int r = 0; r < 4; r++) {
                 cv::line(drawImg, pts[r], pts[(r + 1) % 4], color, 1, cv::LINE_8);
             }

@@ -106,8 +106,8 @@ void custom_conv_kernel(){
  *
  *  copyMakeBorder（
  *      - Mat src, // 输入图像
- *      - Mat dst, // 添加边缘图像
- *      - int top, // 边缘长度，一般上下左右都取相同值，
+ *      - Mat dst, // 输出图像，与src图像有相同的类型，其尺寸应为Size(src.cols+left+right, src.rows+top+bottom)
+ *      - int top, // 在图像的四个方向上扩充像素的值，一般上下左右都取相同值，
  *      - int bottom,
  *      - int left,
  *      - int right,
@@ -118,18 +118,16 @@ void custom_conv_kernel(){
 void verge(){
     auto src = getImage();
     cv::Mat constant, replicate, wrap, reflect;
-    cv::copyMakeBorder(src, constant, 3, 3, 3, 3, cv::BorderTypes::BORDER_CONSTANT, {0,0,255});
+    cv::copyMakeBorder(src, constant,  3, 3, 3, 3, cv::BorderTypes::BORDER_CONSTANT, {0,0,255});
     cv::copyMakeBorder(src, replicate, 3, 3, 3, 3, cv::BorderTypes::BORDER_REPLICATE);
-    cv::copyMakeBorder(src, wrap, 3, 3, 3, 3, cv::BorderTypes::BORDER_WRAP);
-    cv::copyMakeBorder(src, reflect, 3, 3, 3, 3, cv::BorderTypes::BORDER_REFLECT);
+    cv::copyMakeBorder(src, wrap,      3, 3, 3, 3, cv::BorderTypes::BORDER_WRAP);
+    cv::copyMakeBorder(src, reflect,   3, 3, 3, 3, cv::BorderTypes::BORDER_REFLECT);
     cv::imshow("src",       src);
     cv::imshow("constant",  constant);
     cv::imshow("replicate", replicate);
     cv::imshow("constant",  constant);
     cv::imshow("reflect",   reflect);
 }
-
-
 
 
 int main(){
