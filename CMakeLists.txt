@@ -14,6 +14,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 # 链接所有库，不指定cpp文件
 link_libraries(${OpenCV_LIBRARIES})
 
+add_executable(00test cpp/00test.cpp)
 add_executable(01 cpp/01.cpp)
 add_executable(02mat cpp/02mat.cpp)
 add_executable(03image_operate cpp/03image_operate.cpp)
@@ -42,3 +43,5 @@ add_executable(25split_merge cpp/25split_merge.cpp)
 add_executable(26fourier_dft cpp/26fourier_dft.cpp)
 add_executable(27wiener cpp/27wiener.cpp)
 add_executable(28translate_move cpp/28translate_move.cpp)
+add_executable(29image_concat_surf cpp/29image_concat_surf.cpp)
+add_executable(30image_concat_orb cpp/30image_concat_orb.cpp)

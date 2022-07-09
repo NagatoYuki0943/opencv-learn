@@ -45,9 +45,9 @@ void func(){
     cv::Mat blur, gray, canny;
 
     /* 第一步：高斯模糊 不一定需要 */
-    cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
+    //cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
-    cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
     /* 第三步：Canny - 高低阈值输出二值图像边缘 */
     cv::Canny(gray, canny, 85, 255, 3, false);
 
@@ -81,9 +81,9 @@ void func(){
         //随机颜色
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         //绘制Contours轮廓
-        cv::drawContours(drawImg, contours, i, color, 1, cv::LINE_8, hierarchy, 0, {0, 0});
+        cv::drawContours(drawImg, contours, i, color, 1, cv::LineTypes::LINE_8, hierarchy, 0, {0, 0});
         //绘制圆圈
-        cv::circle(drawImg, ccs[i], 3, color, 2, cv::LINE_8);
+        cv::circle(drawImg, ccs[i], 3, color, 2, cv::LineTypes::LINE_8);
     }
 
     cv::imshow("src",     src);

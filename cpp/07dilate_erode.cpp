@@ -31,14 +31,14 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * iterations: 迭代次数
  */
 void dilate(){
-    auto src = getImage();
+    auto src = getImage("../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     int size = 3;
     //auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(size, size), cv::Point(-1, -1));
-    auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, {size, size}, {-1, -1});
+    auto structureElement = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {size, size}, {-1, -1});
     cv::dilate(src, dst, structureElement, {-1, -1}, 2);
 
-    cv::imshow("dilate src", src);
+    cv::imshow("src", src);
     cv::imshow("dilate dst", dst);
 }
 
@@ -51,14 +51,14 @@ void dilate(){
  * iterations: 迭代次数
  */
 void erode(){
-    auto src = getImage();
+    auto src = getImage("../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     int size = 3;
     //auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(size, size), cv::Point(-1, -1));
-    auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, {size, size}, {-1, -1});
+    auto structureElement = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {size, size}, {-1, -1});
     cv::erode(src, dst, structureElement, {-1, -1}, 2);
 
-    cv::imshow("erode src", src);
+    cv::imshow("src", src);
     cv::imshow("erode dst", dst);
 }
 
@@ -75,7 +75,7 @@ int element_size = 3;
 int max_size = 21;
 void CallBack_Demo(int, void*) {
     int s = element_size * 2 + 1;
-    auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, {s, s}, {-1, -1});
+    auto structureElement = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {s, s}, {-1, -1});
     cv::dilate(src, dst, structureElement, {-1, -1}, 1);
     //cv::erode(src, dst, structureElement);
     cv::imshow(OUTPUT_WIN, dst);

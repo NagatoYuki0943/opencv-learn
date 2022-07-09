@@ -65,9 +65,9 @@ void fond_contour(){
     //src.copyTo(dst);  //可以在原图绘制
 
     /* 第一步：高斯模糊 不一定需要 */
-    cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
+    //cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
-    cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
     /* 第三步：Canny - 高低阈值输出二值图像边缘 */
     cv::Canny(gray, canny, 85, 255, 3, false);
     //cv::threshold(gray, canny,   150, 255, cv::ThresholdTypes::THRESH_BINARY);    //不建议使用阈值,因为返回的不是边缘,而是大块的黑白块
