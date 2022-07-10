@@ -68,19 +68,20 @@ void pry_up_down(){
 cv::Mat resize(const cv::Mat& src, int dst_height, int dst_width, const std::string& interpolation) {
     cv::Mat dst(dst_height, dst_width, src.type());
     if (interpolation == "bilinear") {
-        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LINEAR);
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LINEAR);   // 线性插值
     }
     else if (interpolation == "nearest") {
-        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_NEAREST);
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_NEAREST);  // 最邻近插值
     }
     else if (interpolation == "area") {
-        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_AREA);
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_AREA);     // 区域插值
     }
     else if (interpolation == "bicubic") {
-        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_CUBIC);
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_CUBIC);    // 双立方插值
     }
     else if (interpolation == "lanczos") {
-        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LANCZOS4);
+        cv::resize(src, dst, dst.size(), 0, 0, cv::InterpolationFlags::INTER_LANCZOS4); // Lanczos4(超过8x8邻域的插值算法)
+        // )
     }
     else {
         assert(0);

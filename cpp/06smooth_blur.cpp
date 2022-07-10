@@ -135,10 +135,10 @@ void bilateral(){
 
 
 int main(){
-    blur();
+    //blur();
     //gauss();
     //median();
-    //bilateral();
+    bilateral();
     cv::waitKey(0);
     return 0;
 }

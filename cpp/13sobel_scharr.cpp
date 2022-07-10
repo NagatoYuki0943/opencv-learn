@@ -74,14 +74,14 @@ void sobel(){
  * Scharr 比Sobel更多细节
  *
  * cv::Scharr (
- *  InputArray Src  // 输入图像
- *  OutputArray dst // 输出图像，大小与输入图像一致
- *  int depth       // 输出图像深度.
- *  int dx.         // X方向，几阶导数
- *  int dy          // Y方向，几阶导数.
- *  double scale = 1
- *  double delta = 0
- *  int borderType = BORDER_DEFAULT
+ *      InputArray Src  // 输入图像
+ *      OutputArray dst // 输出图像，大小与输入图像一致
+ *      int depth       // 输出图像深度.
+ *      int dx.         // X方向，几阶导数
+ *      int dy          // Y方向，几阶导数.
+ *      double scale = 1
+ *      double delta = 0
+ *      int borderType = BORDER_DEFAULT
  * )
  */
 void scharr(){

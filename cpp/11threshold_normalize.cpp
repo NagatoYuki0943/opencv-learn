@@ -18,28 +18,77 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 }
 
 /**
- * cv::threshold(src, dst, thresh, maxvalue, type);
- *  thresh: threshold value
+ * cv::threshold(
+ *      src,        // 源图像，可以为8位的灰度图，也可以为32位的彩色图像。
+ *      dst,        // 输出图像
+ *      thresh,     // 阈值
+ *      maxvalue,   // dst图像中最大值
+ *      type        // 阈值类型，可以具体类型如下
+ * )
+ *  编号	 阈值类型枚举	            注意
+ *  1	 THRESH_BINARY
+ *  2	 THRESH_BINARY_INV      BINARY的负片
+ *  3	 THRESH_TRUNC
+ *  4	 THRESH_TOZERO
+ *  5	 THRESH_TOZERO_INV      TOZERO的负片
+ *  6	 THRESH_MASK
+ *  7	 THRESH_OTSU	        不支持32位
+ *  8	 THRESH_TRIANGLE	    不支持32位
  */
-void func() {
+void threshold() {
     auto src = getImage();
-    cv::Mat gray, triangle, binary, mask, otsu, tozero, trunc;
+    cv::Mat gray, triangle, binary, binary_inv, mask, otsu, tozero, tozero_inv, trunc;
     cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
 
-    cv::threshold(gray, triangle, 150, 255, cv::ThresholdTypes::THRESH_TRIANGLE);
-    cv::threshold(gray, binary,   150, 255, cv::ThresholdTypes::THRESH_BINARY);     //返回二值图像
-    cv::threshold(gray, mask,     150, 255, cv::ThresholdTypes::THRESH_MASK);
-    cv::threshold(gray, otsu,     150, 255, cv::ThresholdTypes::THRESH_OTSU);
-    cv::threshold(gray, tozero,   150, 255, cv::ThresholdTypes::THRESH_TOZERO);
-    cv::threshold(gray, trunc,    150, 255, cv::ThresholdTypes::THRESH_TRUNC);
+    cv::threshold(gray, triangle,   150, 255, cv::ThresholdTypes::THRESH_TRIANGLE);
+    cv::threshold(gray, binary,     150, 255, cv::ThresholdTypes::THRESH_BINARY);     //返回二值图像
+    cv::threshold(gray, binary_inv, 150, 255, cv::ThresholdTypes::THRESH_BINARY_INV); //返回二值图像
+    cv::threshold(gray, mask,       150, 255, cv::ThresholdTypes::THRESH_MASK);
+    cv::threshold(gray, otsu,       150, 255, cv::ThresholdTypes::THRESH_OTSU);
+    cv::threshold(gray, tozero,     150, 255, cv::ThresholdTypes::THRESH_TOZERO);
+    cv::threshold(gray, tozero_inv, 150, 255, cv::ThresholdTypes::THRESH_TOZERO_INV);
+    cv::threshold(gray, trunc,      150, 255, cv::ThresholdTypes::THRESH_TRUNC);
+
+    cv::imshow("src",        src);
+    cv::imshow("triangle",   triangle);
+    cv::imshow("binary",     binary);
+    cv::imshow("binary_inv", binary_inv);
+    cv::imshow("mask",       mask);
+    cv::imshow("otsu",       otsu);
+    cv::imshow("tozero",     tozero);
+    cv::imshow("tozero_inv", tozero_inv);
+    cv::imshow("trunc",      trunc);
+}
+
+
+/**
+ *
+ * void cv::adaptiveThreshold(
+ *      InputArray  src,        // 输入图像，8位单通道图像
+ *      OutputArray  dst,       // 目标图像，与输入图像有相同的尺寸和类型
+ *      double  maxValue,       // 给像素赋予的满足阈值类型的非零值
+ *      int  adaptiveMethod,    // 用于指定自适应阈值的算法，具体可以查看adaptiveThresholdTypes给出的具体内容，简要内容如下：
+ *                                  ADAPTIVE_THRESH_MEAN_C: 阈值时由blockSize确定的像素(x, y)在blockSize x blockSize范围内的邻域像素值减参数C得到的平均值
+ *                                  ADAPTIVE_THRESH_GAUSSIAN_C: 阈值是blockSize x blockSize领域范围内减去C后的加权和。默认的sigma用于指定的blockSize，可通过getGaussianKernel查看详细信息。
+ *      int  thresholdType,     // 阈值类型，其取值有两种类型分别是：
+ *                                  THRESH_BINARY
+ *                                  THRESH_BINARY_INV
+ *      int  blockSize,         // 用于计算阈值大小的像素邻域尺寸，取值为3\5\7……
+ *      double  C               // 自适应阈值算法中减去的常数值，通常是正数，在极少情况下式0或负值。
+ * )
+ */
+void adaptiveThreshold(){
+    auto src = getImage();
+    cv::Mat gray, mean, gaussian;
+    cv::cvtColor(src, gray, cv::ColorConversionCodes::COLOR_BGR2GRAY);
+    cv::adaptiveThreshold(gray, mean,     255,cv::AdaptiveThresholdTypes::ADAPTIVE_THRESH_MEAN_C,
+                          cv::ThresholdTypes::THRESH_BINARY, 3, 10);
+    cv::adaptiveThreshold(gray, gaussian, 255,cv::AdaptiveThresholdTypes::ADAPTIVE_THRESH_GAUSSIAN_C,
+                          cv::ThresholdTypes::THRESH_BINARY, 3, 10);
 
     cv::imshow("src",      src);
-    cv::imshow("triangle", triangle);
-    cv::imshow("binary",   binary);
-    cv::imshow("mask",     mask);
-    cv::imshow("otsu",     otsu);
-    cv::imshow("tozero",   tozero);
-    cv::imshow("trunc",    trunc);
+    cv::imshow("mean",     mean);
+    cv::imshow("gaussian", gaussian);
 }
 
 
@@ -65,15 +114,20 @@ void func() {
  *                     NORM_MINMAX: 数组的数值被平移或缩放到一个指定的范围，线性归一化，一般较常用。
  *   - int dtype = -1:      当该参数为负数时，输出数组的类型与输入数组的类型相同，否则输出数组与输入数组只是通道数相同，而depth = CV_MAT_DEPTH(dtype)
  *   - InputArray mask = noArray(): 操作掩膜版，用于指示函数是否仅仅对指定的元素进行操作。
+ *
+ *  alpha=0, beta=255, norm_type=cv::NormTypes::NORM_MINMAX 可以将数据转化到0~255之间
+ *  再通过 cv::convertScaleAbs(src, dst, 1, 0) 将数据转化为CV_8UC1, 或者通过 img.convertTo(CV_8UC1)也可以
  */
 void normalize(){
     auto src = getImage();
-    cv::Mat dst;
-    cv::normalize(src, dst, 50, 200, cv::NormTypes::NORM_L2);;
-    cout << dst << endl;
+    cv::Mat dst1, dst2;
+    cv::normalize(src, dst1, 50, 200, cv::NormTypes::NORM_MINMAX, CV_8UC1);
+    cv::normalize(src, dst2, 0,  255, cv::NormTypes::NORM_MINMAX, CV_8UC3);
     cv::imshow("src", src);
-    cv::imshow("dst", dst);
+    cv::imshow("50~200", dst1);
+    cv::imshow("0~255", dst2);
 }
+
 
 /**
  * 深度学习归一化
@@ -131,7 +185,8 @@ void test_normalize(){
 }
 
 int main(){
-    //func();
+    //threshold();
+    //adaptiveThreshold();
     normalize();
     //test_normalize();
     cv::waitKey(0);

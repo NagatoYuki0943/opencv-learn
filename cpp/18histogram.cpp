@@ -28,8 +28,8 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 如何实现，通过上一课中的remap我们知道可以将图像灰度分布从一个分布映射到另外一个分布，然后在得到映射后的像素值即可。
  *
  * equalizeHist(
- *  InputArray src,//输入图像，必须是8-bit的单通道图像
- *  OutputArray dst// 输出结果
+ *      InputArray src,//输入图像，必须是8-bit的单通道图像
+ *      OutputArray dst// 输出结果
  * )
  */
 void equalizeHist(){
@@ -53,21 +53,21 @@ void equalizeHist(){
  *
  * 把多通道图像分为多个单通道图像
  * split(
- *  const Mat &src,  // 输入图像
- *  Mat* mvbegin     // 输出的通道图像数组
+ *      const Mat &src,  // 输入图像
+ *      Mat* mvbegin     // 输出的通道图像数组
  * )
  *
  * cv::calcHist(
- *  const Mat* images,      // 输入图像指针
- *  int images,             // 图像数目
- *  const int* channels,    // 通道数
- *  InputArray mask,        // 输入mask，可选，不用
- *  OutputArray hist,       // 输出的直方图数据
- *  int dims,               // 维数
- *  const int* histsize,    // 直方图级数
- *  const float* ranges,    // 值域范围
- *  bool uniform,           // true by default
- *  bool accumulate         // false by defaut
+ *      const Mat* images,      // 输入图像指针
+ *      int images,             // 图像数目
+ *      const int* channels,    // 通道数
+ *      InputArray mask,        // 输入mask，可选，不用
+ *      OutputArray hist,       // 输出的直方图数据
+ *      int dims,               // 维数
+ *      const int* histsize,    // 直方图级数
+ *      const float* ranges,    // 值域范围
+ *      bool uniform,           // true by default
+ *      bool accumulate         // false by defaut
  * )
  */
 void calcHist(){

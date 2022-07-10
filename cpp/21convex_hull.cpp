@@ -29,10 +29,10 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *  对每个点pi来说，如果添加pi点到凸包中导致一个左转向（逆时针方法）则添加该点到凸包， 反之如果导致一个右转向（顺时针方向）删除该点从凸包中
  *
  * cv::convexHull(
- *  InputArray points,  // 输入候选点，来自findContours
- *  OutputArray hull,   // 凸包
- *  bool clockwise,     // default false, 顺时针方向
- *  bool returnPoints   // true 表示返回点个数，如果第二个参数是 vector则自动忽略
+ *      InputArray points,  // 输入候选点，来自findContours
+ *      OutputArray hull,   // 凸包
+ *      bool clockwise,     // default false, 顺时针方向
+ *      bool returnPoints   // true 表示返回点个数，如果第二个参数是 vector则自动忽略
  * )
  *
  * 实现步骤

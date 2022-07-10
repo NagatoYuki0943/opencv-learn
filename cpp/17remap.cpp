@@ -23,13 +23,13 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 简单点说就是把输入图像中各个像素按照一定的规则映射到另外一张图像的对应位置上去，形成一张新的图像
  *
  * cv::Remap(
- *  InputArray src,             // 输入图像
- *  OutputArray dst,            // 输出图像
- *  InputArray map1,            // x 映射表 x方向如何变化 CV_32FC1/CV_32FC2
- *  InputArray map2,            // y 映射表 y方向如何变化
- *  int interpolation,          // 选择的插值方法，常见线性插值，可选择立方等
- *  int borderMode,             // BORDER_CONSTANT
- *  const Scalar borderValue    // color
+ *      InputArray src,             // 输入图像
+ *      OutputArray dst,            // 输出图像
+ *      InputArray map1,            // x 映射表 x方向如何变化 CV_32FC1/CV_32FC2
+ *      InputArray map2,            // y 映射表 y方向如何变化
+ *      int interpolation,          // 选择的插值方法，常见线性插值，可选择立方等
+ *      int borderMode,             // BORDER_CONSTANT
+ *      const Scalar borderValue    // color
  * )
  */
 cv::Mat src, dst, map_x, map_y;

@@ -29,27 +29,27 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 轮廓发现findContours
  * 在二值图像上发现轮廓使用API
  * cv::findContours(
- *  InputOutputArray binImg,        // 输入图像，非0的像素被看成1,0的像素值保持不变，8-bit
- *  OutputArrayOfArrays contours,   // 全部发现的轮廓对象
- *  OutputArray, hierarchy          // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
- *  int mode,                       // 轮廓返回的模式
- *  int method,                     // 发现方法
- *  Point offset=Point()            // 轮廓像素的位移，默认（0, 0）没有位移
+ *      InputOutputArray binImg,        // 输入图像，非0的像素被看成1,0的像素值保持不变，8-bit
+ *      OutputArrayOfArrays contours,   // 全部发现的轮廓对象
+ *      OutputArray, hierarchy          // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
+ *      int mode,                       // 轮廓返回的模式
+ *      int method,                     // 发现方法
+ *      Point offset=Point()            // 轮廓像素的位移，默认（0, 0）没有位移
  * )
  *
  * 轮廓绘制(draw contour)
  * 在二值图像上发现轮廓使用API
  *  cv::findContours之后对发现的轮廓数据进行绘制显示
  * cv::drawContours(
- *  InputOutputArray binImg,        // 输出图像
- *  OutputArrayOfArrays contours,   // 全部发现的轮廓对象
- *  Int contourIdx                  // 轮廓索引号
- *  const Scalar & color,           // 绘制时候颜色
- *  int thickness,                  // 绘制线宽
- *  int lineType ,                  // 线的类型LINE_8
- *  InputArray hierarchy,           // 拓扑结构图
- *  int maxlevel,                   // 最大层数， 0只绘制当前的，1表示绘制绘制当前及其内嵌的轮廓
- *  Point offset=Point()            // 轮廓位移，可选
+ *      InputOutputArray binImg,        // 输出图像
+ *      OutputArrayOfArrays contours,   // 全部发现的轮廓对象
+ *      Int contourIdx                  // 轮廓索引号
+ *      const Scalar & color,           // 绘制时候颜色
+ *      int thickness,                  // 绘制线宽
+ *      int lineType ,                  // 线的类型LINE_8
+ *      InputArray hierarchy,           // 拓扑结构图
+ *      int maxlevel,                   // 最大层数， 0只绘制当前的，1表示绘制绘制当前及其内嵌的轮廓
+ *      Point offset=Point()            // 轮廓位移，可选
  * )
  *
  * 步骤

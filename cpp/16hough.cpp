@@ -21,26 +21,26 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 查找直线
  * 标准的霍夫变换 cv::HoughLines从平面坐标转换到霍夫空间，最终输出是 （θ，r）表示极坐标空间
  * cv::HoughLines(
- *  InputArray src,         // 输入图像，必须8-bit的灰度图像
- *  OutputArray lines,      // 输出的极坐标来表示直线
- *  double rho,             // 生成极坐标时候的像素扫描步长
- *  double theta,           // 生成极坐标时候的角度步长，一般取值CV_PI/180
- *  int threshold,          // 阈值，只有获得足够交点的极坐标点才被看成是直线
- *  double srn=0;           // 是否应用多尺度的霍夫变换，如果不是设置0表示经典霍夫变换
- *  double stn=0;           // 是否应用多尺度的霍夫变换，如果不是设置0表示经典霍夫变换
- *  double min_theta=0;     // 表示角度扫描范围 0 ~180之间， 默认即可
- *  double max_theta=CV_PI
+ *      InputArray src,         // 输入图像，必须8-bit的灰度图像
+ *      OutputArray lines,      // 输出的极坐标来表示直线
+ *      double rho,             // 生成极坐标时候的像素扫描步长
+ *      double theta,           // 生成极坐标时候的角度步长，一般取值CV_PI/180
+ *      int threshold,          // 阈值，只有获得足够交点的极坐标点才被看成是直线
+ *      double srn=0;           // 是否应用多尺度的霍夫变换，如果不是设置0表示经典霍夫变换
+ *      double stn=0;           // 是否应用多尺度的霍夫变换，如果不是设置0表示经典霍夫变换
+ *      double min_theta=0;     // 表示角度扫描范围 0 ~180之间， 默认即可
+ *      double max_theta=CV_PI
  * ) // 一般情况是有经验的开发者使用，需要自己反变换到平面空间
  *
  * 霍夫变换直线概率 cv::HoughLinesP最终输出是直线的两个点（x0,y0,x1,y1)）
  * cv::HoughLinesP(
- *  InputArray src,         // 输入图像，必须8-bit的灰度图像
- *  OutputArray lines,      // 输出的极坐标来表示直线
- *  double rho,             // 生成极坐标时候的像素扫描步长
- *  double theta,           // 生成极坐标时候的角度步长，一般取值CV_PI/180
- *  int threshold,          // 阈值，只有获得足够交点的极坐标点才被看成是直线
- *  double minLineLength=0; // 最小直线长度
- *  double maxLineGap=0;    // 最大间隔
+ *      InputArray src,         // 输入图像，必须8-bit的灰度图像
+ *      OutputArray lines,      // 输出的极坐标来表示直线
+ *      double rho,             // 生成极坐标时候的像素扫描步长
+ *      double theta,           // 生成极坐标时候的角度步长，一般取值CV_PI/180
+ *      int threshold,          // 阈值，只有获得足够交点的极坐标点才被看成是直线
+ *      double minLineLength=0; // 最小直线长度
+ *      double maxLineGap=0;    // 最大间隔
  * )
  */
 void houghLine(){

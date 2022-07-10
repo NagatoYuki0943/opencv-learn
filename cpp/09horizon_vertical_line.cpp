@@ -18,6 +18,9 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 }
 
 
+/**
+ * 检测竖直/平行的线
+ */
 void func(){
     /* 第一步：imread导入彩色图像 */
     auto src = getImage("../images/horizon_vertical.jpg");

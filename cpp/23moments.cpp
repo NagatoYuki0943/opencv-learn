@@ -22,16 +22,16 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *
  * cv::moments 计算生成数据
  * cv::moments(
- *  InputArray array,       // 输入数据 可以使用 findContours 的返回值
- *  bool binaryImage=false  // 是否为二值图像
+ *      InputArray array,       // 输入数据 可以使用 findContours 的返回值
+ *      bool binaryImage=false  // 是否为二值图像
  * )
  * contourArea(
- *  InputArray contour,     // 输入轮廓数据
- *  bool oriented           // 默认false、返回绝对值
+ *      InputArray contour,     // 输入轮廓数据
+ *      bool oriented           // 默认false、返回绝对值
  * )
  * arcLength(
- *  InputArray curve,       // 输入曲线数据
- *  bool closed             // 是否是封闭曲线
+ *      InputArray curve,       // 输入曲线数据
+ *      bool closed             // 是否是封闭曲线
  * )
  *
  * 实现步骤

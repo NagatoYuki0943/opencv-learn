@@ -25,12 +25,12 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 推荐的高低阈值比值为 T2: T1 = 3:1/2:1其中T2为高阈值，T1为低阈值
  *
  * Canny（
- *  InputArray src,     // 8-bit的输入图像
- *  OutputArray edges,  // 输出边缘图像， 一般都是二值图像，背景是黑色
- *  double threshold1,  // 低阈值，常取高阈值的1/2或者1/3
- *  double threshold2,  // 高阈值
- *  int aptertureSize,  // Sobel算子的size，通常3x3，取值3
- *  bool L2gradient     // 选择 true表示是L2来归一化，否则用L1归一化 L2均方误差 L1绝对平方误差 默认情况一般选择是L1，参数设置为false
+ *      InputArray src,     // 8-bit的输入图像
+ *      OutputArray edges,  // 输出边缘图像， 一般都是二值图像，背景是黑色
+ *      double threshold1,  // 低阈值，常取高阈值的1/2或者1/3
+ *      double threshold2,  // 高阈值
+ *      int aptertureSize,  // Sobel算子的size，通常3x3，取值3
+ *      bool L2gradient     // 选择 true表示是L2来归一化，否则用L1归一化 L2均方误差 L1绝对平方误差 默认情况一般选择是L1，参数设置为false
  * ）
  */
 void canny(){

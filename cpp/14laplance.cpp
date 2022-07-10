@@ -24,13 +24,13 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 导数计算，依据此理论我们可以计算图像二阶导数，提取边缘。
  *
  * Laplacian(
- *  InputArray src,
- *  OutputArray dst,
- *  int depth,          //深度CV_16S
- *  int kisze,          // 3
- *  double scale = 1,
- *  double delta = 0,
- *  int borderType = 4
+ *      InputArray src,
+ *      OutputArray dst,
+ *      int depth,          //深度CV_16S
+ *      int kisze,          // 3
+ *      double scale = 1,
+ *      double delta = 0,
+ *      int borderType = 4
  * )
  */
 void laplacian(){

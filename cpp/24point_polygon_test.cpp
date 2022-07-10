@@ -21,9 +21,9 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 /**
  * 测试一个点是否在给定的多边形内部，边缘或者外部
  * pointPolygonTest(
- *  InputArray contour, // 输入的轮廓
- *  Point2f pt,         // 测试点
- *  bool measureDist    // 是否返回距离值，如果是false，1表示在内面，0表示在边界上，-1表示在外部，true返回实际距离
+ *      InputArray contour, // 输入的轮廓
+ *      Point2f pt,         // 测试点
+ *      bool measureDist    // 是否返回距离值，如果是false，1表示在内面，0表示在边界上，-1表示在外部，true返回实际距离
  * )
  * 返回数据是double类型  大于0: 内部;  等于0:边缘;  小于0: 外部
  *

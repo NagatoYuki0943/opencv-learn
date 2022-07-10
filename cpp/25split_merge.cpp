@@ -24,14 +24,14 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 /*
  * 把多通道图像分为多个单通道图像
  * cv::split(
- *  const Mat &src,  // 输入图像
- *  Mat* mv          // 输出的通道图像数组
+ *      const Mat &src,  // 输入图像
+ *      Mat* mv          // 输出的通道图像数组
  * )
  *
  * 把多个单通道图像合并为多通道图像
  * cv::merge(
- *  Mat* mv          // 输入的通道图像数组
- *  const Mat &src,  // 输出图像
+ *      Mat* mv          // 输入的通道图像数组
+ *      const Mat &src,  // 输出图像
  * )
  */
 void func(){

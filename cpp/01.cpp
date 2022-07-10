@@ -83,6 +83,7 @@ void scalar(){
     // 蓝,绿,红
     cv::Scalar color1 = cv::Scalar(255, 0, 0);
     cv::Mat img1 = cv::Mat(500, 500, CV_8UC3, color1);
+    cout << img1.type() << endl;
     cv::imshow("B", img1);
 
     cv::Scalar color2 = cv::Scalar(0, 255, 0);

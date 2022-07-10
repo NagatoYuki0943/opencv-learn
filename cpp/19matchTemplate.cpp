@@ -25,14 +25,14 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  * 工作方法，在带检测图像上，从左到右，从上向下计算模板图像与重叠子图像的匹配度，匹配程度越大，两者相同的可能性越大。
  *
  * cv::matchTemplate(
- *  InputArray image,           // 源图像，必须是8-bit或者32-bit浮点数图像
- *  InputArray templ,           // 模板图像，类型与输入图像一致
- *  OutputArray result,         // 输出结果，必须是单通道32位浮点数，假设源图像WxH,模板图像wxh, 则结果必须为W-w+1, H-h+1的大小
- *  int method,                 // 使用的匹配方法
- *  InputArray mask=noArray()   // (optional)
+ *      InputArray image,           // 源图像，必须是8-bit或者32-bit浮点数图像
+ *      InputArray templ,           // 模板图像，类型与输入图像一致
+ *      OutputArray result,         // 输出结果，必须是单通道32位浮点数，假设源图像WxH,模板图像wxh, 则结果必须为W-w+1, H-h+1的大小
+ *      int method,                 // 使用的匹配方法
+ *      InputArray mask=noArray()   // (optional)
  * )
  */
-void template_match(){
+void matchTemplate(){
     auto src = getImage();
     auto templ_image = getImage("../images/squirrel_template.jpg");
     cv::Mat dst;
@@ -72,7 +72,7 @@ void template_match(){
 
 
 int main(){
-    template_match();
+    matchTemplate();
     cv::waitKey(0);
     return 0;
 }
