@@ -217,10 +217,10 @@ void back_projection(){
     auto src = getImage();
     cv::Mat hsv, hue;
     cv::cvtColor(src,  hsv,  cv::COLOR_BGR2HSV);
-    hue.create(hsv.size(), hsv.type());
+    hue.create(hsv.size(), hsv.depth());    // 是depth()而不是type()
 
     //混合hsv和中hs通道放到hue中
-    int nchannels[] = { 0, 0 };
+    int nchannels[] = { 0, 0 }; // 0通道 到 0通道
     cv::mixChannels(&hsv, 1, &hue, 1, nchannels, 1);
 
     float range[] = { 0, 180 };
@@ -228,6 +228,7 @@ void back_projection(){
     cv::Mat h_hist;
     cv::calcHist(&hue, 1, 0, cv::Mat(), h_hist, 1,
                  &bins, &histRanges, true, false);
+    //变为0~255之间
     cv::normalize(h_hist, h_hist, 0, 255, cv::NORM_MINMAX, -1, cv::Mat());
 
     cv::Mat backPrjImage;

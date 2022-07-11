@@ -29,7 +29,7 @@ void blur(){
     //cv::blur(src, dst, cv::Size(5, 5), cv::Point(-1,-1));
     cv::blur(src, dst, {5, 5}, {-1, -1});   //两种写法都行
 
-    cv::imshow("blur src", src);
+    cv::imshow("src",      src);
     cv::imshow("blur dst", dst);
 }
 
@@ -75,7 +75,7 @@ void gauss(){
     //cv::GaussianBlur(src, dst, cv::Size(5, 5), 10, 10);
     cv::GaussianBlur(src, dst, {5, 5}, 10, 10);   //两种写法都行
 
-    cv::imshow("gauss src", src);
+    cv::imshow("src", src);
     cv::imshow("gauss dst", dst);
 
     //查看高斯核
@@ -108,7 +108,7 @@ void median(){
     auto dst = cv::Mat(src.size(), src.type());
     cv::medianBlur(src, dst, 5);
 
-    cv::imshow("median src", src);
+    cv::imshow("src",        src);
     cv::imshow("median dst", dst);
 }
 
@@ -129,8 +129,31 @@ void bilateral(){
     auto dst = cv::Mat(src.size(), src.type());
     cv::bilateralFilter(src, dst, 15, 150, 3);
 
-    cv::imshow("bilateral src", src);
+    cv::imshow("src",           src);
     cv::imshow("bilateral dst", dst);
+}
+
+
+
+/**
+ * 方框滤波(类似卷积,默认参数都为1,可以理解为求均值)
+ * void cv::boxFilter(
+ *      InputArray  src,                            // 输入图像，可以是Mat类型
+ *      OutputArray dst,                            // 经滤波后输出图像
+ *      int         ddepth,                         // 目标图像的深度，若设置为-1,则深度与原图像深度相同
+ *      Size        ksize,                          // Size类型，内核的大小，一般用Size(w, h)表示，如Size(3, 3)表示kernel窗口大小为3x3
+ *      Point       anchor=Point(-1,-1),            // 进行滤波操作的点，如果是默认值(-1, -1)说明对上述窗口中心点所对应的像素点进行操作
+ *      bool        normalize=true,                 // 内核是否被归一化处理，有默认值true
+ *      int         borderType=BORDER_DEFAULT       // 用于腿短图像外部像素的某种便捷模式，有默认值BORDER_DEFAULT
+ * )
+ */
+void box(){
+    auto src = getImage();
+    auto dst = cv::Mat(src.size(), src.type());
+    cv::boxFilter(src, dst, -1, cv::Size(5, 5));
+
+    cv::imshow("src",     src);
+    cv::imshow("box dst", dst);
 }
 
 
@@ -138,7 +161,8 @@ int main(){
     //blur();
     //gauss();
     //median();
-    bilateral();
+    //bilateral();
+    box();
     cv::waitKey(0);
     return 0;
 }

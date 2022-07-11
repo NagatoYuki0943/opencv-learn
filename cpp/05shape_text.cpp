@@ -113,11 +113,40 @@ void circle(){
 
 
 /**
+ *
+ * 计算插入文本文字的宽和高，其定义如下
+ * cv::getTextSize()
+ * 参数解释：
+ *      - const string& text:   输入的文本文字
+ *      - int fontFace:         文字字体类型
+ *      - double fontScale:     字体缩放系数
+ *      - int thickness:        字体笔画线宽
+ *      - CV_OUT int* baseLine: 文字最底部y坐标
+ *
  * 添加文字
  * cv::putText(image, text, 左下角坐标, 字体, 字体大小, 颜色, 字体厚度);
+ * 参数解释：
+ *      - Mat& img: 要添加备注的图片
+ *      - const string& text: 要添加的文字内容
+ *      - Point org: 要添加的文字基准点或原点坐标，左上角还是左下角取决于最后一个参数bottomLeftOrigin的取值
+ *      - int fontFace: 文字的字体类型（Hershey字体集），可供选择的有
+ *          FONT_HERSHEY_SIMPLEX：正常大小无衬线字体
+ *          FONT_HERSHEY_PLAIN：小号无衬线字体
+ *          FONT_HERSHEY_DUPLEX：正常大小无衬线字体，比FONT_HERSHEY_SIMPLEX更复杂
+ *          FONT_HERSHEY_COMPLEX：正常大小有衬线字体
+ *          FONT_HERSHEY_TRIPLEX：正常大小有衬线字体，比FONT_HERSHEY_COMPLEX更复杂
+ *          FONT_HERSHEY_COMPLEX_SMALL：FONT_HERSHEY_COMPLEX的小译本
+ *          FONT_HERSHEY_SCRIPT_SIMPLEX：手写风格字体
+ *          FONT_HERSHEY_SCRIPT_COMPLEX：手写风格字体，比FONT_HERSHEY_SCRIPT_SIMPLEX更复杂
+ *          这些参数和FONT_ITALIC同时使用就会得到相应的斜体字
+ *      - double fontScale: 字体相较于最初尺寸的缩放系数。若为1.0f，则字符宽度是最初字符宽度，若为0.5f则为默认字体宽度的一半
+ *      - Scalar color: 很熟悉了，字体颜色
+ *      - int thickness = 1: 字体笔画的粗细程度，有默认值1
+ *      - int lineType = 8: 字体笔画线条类型，有默认值8
+ *      - bool bottomLeftOrigin = false: 如果取值为TRUE，则Point org指定的点为插入文字的左上角位置，如果取值为默认值false则指定点为插入文字的左下角位置.
  */
 void text(){
-    auto image = getImage();
+    auto image = getImage("../images/59880532_p0.jpg");
 
     string text = "Confidence Score: 0.95";
 
@@ -126,13 +155,15 @@ void text(){
     cout << "font size:" << font_size << endl;
     int baseline = 0;
     int thickness = font_size / 2;
-    cv::Size textsize = cv::getTextSize(text, cv::FONT_HERSHEY_PLAIN, font_size, thickness, &baseline);
+    cv::Size textsize = cv::getTextSize(text, cv::HersheyFonts::FONT_HERSHEY_PLAIN, font_size, thickness, &baseline);
 
     //背景
-    cv::rectangle(image, cv::Point(0, 0), cv::Point(textsize.width + 5, textsize.height + 5), cv::Scalar(225, 252, 134), cv::FILLED);
+    cv::rectangle(image, cv::Point(0, 0), cv::Point(textsize.width + 5, textsize.height + 5),
+                  cv::Scalar(225, 252, 134), cv::FILLED);
 
     //添加文字
-    cv::putText(image, text, cv::Point(0, textsize.height + 5), cv::FONT_HERSHEY_PLAIN, font_size, cv::Scalar(0, 0, 0), thickness);
+    cv::putText(image, text, cv::Point(0, textsize.height + 5), cv::HersheyFonts::FONT_HERSHEY_PLAIN,
+                font_size, cv::Scalar(0, 0, 0), thickness);
 
     cv::imshow("dst", image);
 }
@@ -164,8 +195,8 @@ int main(){
     //rectangle();
     //oval();
     //circle();
-    //text();
-    random();
+    text();
+    //random();
     cv::waitKey(0);
     return 0;
 }

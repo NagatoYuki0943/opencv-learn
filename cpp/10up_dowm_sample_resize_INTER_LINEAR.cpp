@@ -64,6 +64,17 @@ void pry_up_down(){
  * @param dst_width     目标宽
  * @param interpolation 上采样方式
  * @return
+ *
+ * 插值算法:
+ *      INTER_LINEAR        线性插值
+ *      INTER_NEAREST       最邻近插值
+ *      INTER_CUBIC         双立方插值
+ *      INTER_AREA          区域插值(使用像素区域关系的重采样,时图像抽取的首选方法,但是当图形被放大,它类似于INTER_NEAREST方法)
+ *      INTER_LANCZOS4      Lanczos4(超过8x8邻域的插值算法)
+ *
+ *      INTER_MAX           用于插值的掩模板
+ *      WARP_FILL_OUTLIERS  标志位,用于填充目标图像的像素值,如果其中的一些值对应于原图像中的异常值,那么这些值将被设置为0
+ *      WARP_INVERSE_MAP    标志位,反变换
  */
 cv::Mat resize(const cv::Mat& src, int dst_height, int dst_width, const std::string& interpolation) {
     cv::Mat dst(dst_height, dst_width, src.type());
