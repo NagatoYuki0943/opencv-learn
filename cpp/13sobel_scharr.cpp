@@ -53,8 +53,8 @@ void sobel(){
     /* 第三步：求梯度x和y */
     cv::Sobel(gray, xgrad, CV_16S, 1, 0, 3, 1,0, cv::BorderTypes::BORDER_DEFAULT);
     cv::Sobel(gray, ygrad, CV_16S, 0, 1, 3);
-    cv::Sobel(gray, xy,    CV_16S, 1, 1, 3);
-    //增强
+    cv::Sobel(gray, xy,    CV_16S, 1, 1, 3);    // 不能都有 xy
+    //增强，把任意类型的数据转化为CV_8U
     cv::convertScaleAbs(xgrad, xgrad);
     cv::convertScaleAbs(ygrad, ygrad);
 
@@ -94,7 +94,7 @@ void scharr(){
     /* 第三步：求梯度x和y */
     cv::Scharr(gray, xgrad, CV_16S, 1, 0, 1, 0, cv::BorderTypes::BORDER_REPLICATE);
     cv::Scharr(gray, ygrad, CV_16S, 0, 1);
-    //增强
+    //增强，把任意类型的数据转化为CV_8U
     cv::convertScaleAbs(xgrad, xgrad);
     cv::convertScaleAbs(ygrad, ygrad);
 

@@ -39,7 +39,7 @@ void canny(){
     /* 第一步：高斯模糊 */
     cv::GaussianBlur(src, blur, cv::Size(3, 3), 0, 0);
     /* 第二步：转化为灰度图像 */
-    cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(blur, gray, cv::ColorConversionCodes::COLOR_BGR2GRAY);
     /* Canny - 高低阈值输出二值图像 */
     cv::Canny(gray, canny, 85, 255, 3, false);
 

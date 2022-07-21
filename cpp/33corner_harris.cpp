@@ -41,12 +41,12 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 /**
  * opencv提供cornerHarris()提取Harris角点。
  * cv::cornerHarris(
- *  InputArray  src,        // 输入图像，Mat类型即可，必须为单通道8-bit或浮点型图像
- *  OutputArray dst,        // 角点检测的输出结果，与原图像有相同的尺寸和类型
- *  int         blockSize,  // 邻域大小，可以查看cornerEigenValsAndVecs()得到更多关于blockSize的信息
- *  int         ksize,      // 表示Sobel()算子孔径大小
- *  double      k,          // Harris参数，用于判断是否为角点
- *  int         borderType  // 图像边界模式，有默认值BORDER_DEFAULT
+ *      InputArray  src,        // 输入图像，Mat类型即可，必须为单通道8-bit或浮点型图像
+ *      OutputArray dst,        // 角点检测的输出结果，与原图像有相同的尺寸和类型
+ *      int         blockSize,  // 邻域大小，可以查看cornerEigenValsAndVecs()得到更多关于blockSize的信息
+ *      int         ksize,      // 表示Sobel()算子孔径大小
+ *      double      k,          // Harris参数，用于判断是否为角点
+ *      int         borderType  // 图像边界模式，有默认值BORDER_DEFAULT
  * )
  */
 void cornerHarris(){

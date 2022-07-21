@@ -19,7 +19,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 
 
 /**
- *
+ * 图像矩
  * cv::moments 计算生成数据
  * cv::moments(
  *      InputArray array,       // 输入数据 可以使用 findContours 的返回值

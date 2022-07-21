@@ -42,7 +42,7 @@ void laplacian(){
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
     /* 第三步：拉普拉斯 – 二阶导数计算Laplacian */
     cv::Laplacian(gray, laplac, CV_16S, 3, 1, 0, cv::BorderTypes::BORDER_DEFAULT);
-    //增强
+    //增强，把任意类型的数据转化为CV_8U
     cv::convertScaleAbs(laplac, laplac);
     cv::threshold(laplac, thres, 0, 255, cv::THRESH_OTSU | cv::THRESH_BINARY);
 

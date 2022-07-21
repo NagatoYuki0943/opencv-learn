@@ -90,9 +90,9 @@ void calcHist(){
     int hist_w = 512;   //宽
     int bin_w = hist_w / histSize;  //每个直方图竖线的间隔
     cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
-    cv::normalize(b_hist, b_hist, 0, hist_h, cv::NORM_MINMAX, -1, cv::Mat());
-    cv::normalize(g_hist, g_hist, 0, hist_h, cv::NORM_MINMAX, -1, cv::Mat());
-    cv::normalize(r_hist, r_hist, 0, hist_h, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(b_hist, b_hist, 0, hist_h, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(g_hist, g_hist, 0, hist_h, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(r_hist, r_hist, 0, hist_h, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
 
     // render histogram chart 分别划红绿蓝的直方图曲线
     for (int i = 1; i < histSize; ++i) {    //之所以用i=1开始,是为了-1计算,为0要+1,可能会超出范围
@@ -140,9 +140,9 @@ void compareHist(){
     test1 = getImage("../images/59021351_p0.jpg");
     test2 = getImage("../images/59880532_p0.jpg");
 
-    cv::cvtColor(base,  hsvbase,  cv::COLOR_BGR2HSV);
-    cv::cvtColor(test1, hsvtest1, cv::COLOR_BGR2HSV);
-    cv::cvtColor(test2, hsvtest2, cv::COLOR_BGR2HSV);
+    cv::cvtColor(base,  hsvbase,  cv::ColorConversionCodes::COLOR_BGR2HSV);
+    cv::cvtColor(test1, hsvtest1, cv::ColorConversionCodes::COLOR_BGR2HSV);
+    cv::cvtColor(test2, hsvtest2, cv::ColorConversionCodes::COLOR_BGR2HSV);
 
     int h_bins = 50; int s_bins = 60;
     int histSize[] = { h_bins, s_bins };
@@ -158,13 +158,13 @@ void compareHist(){
 
     //计算3幅图片的直方图并标准化
     cv::calcHist(&hsvbase, 1,  channels, cv::Mat(), hist_base, 2, histSize, ranges, true, false);
-    cv::normalize(hist_base, hist_base, 0, 1, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(hist_base, hist_base, 0, 1, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
 
     cv::calcHist(&hsvtest1, 1, channels, cv::Mat(), hist_test1, 2, histSize, ranges, true, false);
-    cv::normalize(hist_test1, hist_test1, 0, 1, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(hist_test1, hist_test1, 0, 1, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
 
     cv::calcHist(&hsvtest2, 1, channels, cv::Mat(), hist_test2, 2, histSize, ranges, true, false);
-    cv::normalize(hist_test2, hist_test2, 0, 1, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(hist_test2, hist_test2, 0, 1, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
 
     //比较3幅图的直方图
     double basebase  = cv::compareHist(hist_base,  hist_base,  cv::HistCompMethods::HISTCMP_INTERSECT);
@@ -253,10 +253,10 @@ void back_projection(){
 
 
 int main(){
-    //equalizeHist();
+    equalizeHist();
     //calcHist();
     //compareHist();
-    back_projection();
+    //back_projection();
     cv::waitKey(0);
     return 0;
 }

@@ -42,9 +42,9 @@ void matchTemplate(){
     int height = src.rows - templ_image.rows + 1;
     cv::Mat templ = cv::Mat(width, height, CV_32FC1);
 
-    /**
-     * TM_SQDIFF TM_SQDIFF_NORMED TM_CCORR TM_CCORR_NORMED TM_CCOEFF TM_CCOEFF_NORMED
-     */
+
+    //匹配模式
+    //TM_SQDIFF TM_SQDIFF_NORMED TM_CCORR TM_CCORR_NORMED TM_CCOEFF TM_CCOEFF_NORMED
     auto match_method = cv::TemplateMatchModes::TM_SQDIFF;
     cv::matchTemplate(src, templ_image, templ, match_method, cv::Mat());
     cv::normalize(templ, templ, 0, 1, cv::NormTypes::NORM_MINMAX, -1, cv::Mat());
@@ -63,8 +63,10 @@ void matchTemplate(){
     }
 
     //绘制矩形,xy坐标是计算出来的,wh是模板图片宽高
-    cv::rectangle(dst,   cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows), {0, 0, 255}, 2, cv::LineTypes::LINE_8);
-    cv::rectangle(templ, cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows), {0, 0, 255}, 2, cv::LineTypes::LINE_8);
+    cv::rectangle(dst,   cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows),
+                    {0, 0, 255}, 2, cv::LineTypes::LINE_8);
+    cv::rectangle(templ, cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows),
+                    {0, 0, 255}, 2, cv::LineTypes::LINE_8);
 
     cv::imshow("template", templ);
     cv::imshow("match",    dst);

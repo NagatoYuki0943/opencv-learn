@@ -17,12 +17,12 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 }
 
 /**
- * 获取像素点数据,有错误
+ * 获取像素点数据
  * src.at<uchar>(row, col)  必须是uchar类型
  */
 void getPixel(){
     auto src = getImage();
-    cv::Vec3f intensity = src.at<uchar>(100, 150);
+    cv::Vec3b intensity = src.at<uchar>(100, 150);
     //多通道返回数组
     float blue  = intensity.val[0];
     float green = intensity.val[1];

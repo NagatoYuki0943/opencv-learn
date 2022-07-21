@@ -123,9 +123,9 @@ void normalize(){
     cv::Mat dst1, dst2;
     cv::normalize(src, dst1, 50, 200, cv::NormTypes::NORM_MINMAX, CV_8UC1);
     cv::normalize(src, dst2, 0,  255, cv::NormTypes::NORM_MINMAX, CV_8UC3);
-    cv::imshow("src", src);
+    cv::imshow("src",    src);
     cv::imshow("50~200", dst1);
-    cv::imshow("0~255", dst2);
+    cv::imshow("0~255",  dst2);
 }
 
 
@@ -185,9 +185,9 @@ void test_normalize(){
 }
 
 int main(){
-    //threshold();
+    threshold();
     //adaptiveThreshold();
-    normalize();
+    //normalize();
     //test_normalize();
     cv::waitKey(0);
     return 0;

@@ -88,7 +88,7 @@ void fond_contour(){
         //随机颜色
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::drawContours(dst, contours, i, color,2,
-                         cv::LINE_8, hierarchy, 0, cv::Point(0, 0));
+                         cv::LineTypes::LINE_8, hierarchy, 0, cv::Point(0, 0));
     }
     cv::imshow("src",      src);
     cv::imshow("canny",    canny);

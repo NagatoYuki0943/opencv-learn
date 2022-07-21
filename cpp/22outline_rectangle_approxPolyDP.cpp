@@ -23,10 +23,10 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *
  * 轮廓周围绘制矩形 - API
  *  approxPolyDP(
- *   InputArray curve,                  // 一般是由图像的轮廓点组成的点集,可以使用 findContours 的返回值
- *   OutputArray approxCurve,           // 表示输出的多边形点集
- *   double epsilon                     // 主要表示输出的精度，就是另个轮廓点之间最大距离数，5,6,7，，8，，,,，
- *   bool closed                        // 表示输出的多边形是否封闭
+ *      InputArray curve,                  // 一般是由图像的轮廓点组成的点集,可以使用 findContours 的返回值
+ *      OutputArray approxCurve,           // 表示输出的多边形点集
+ *      double epsilon                     // 主要表示输出的精度，就是另个轮廓点之间最大距离数，5,6,7，，8，，,,，
+ *      bool closed                        // 表示输出的多边形是否封闭
  *  )
  *
  * 基于RDP算法实现,目的是减少多边形轮廓点数
@@ -35,11 +35,11 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *
  * 轮廓周围绘制圆和椭圆 - API
  *  cv::minEnclosingCircle(
- *   InputArray points,                 // 得到最小区域圆形
- *   Point2f& center,                   // 圆心位置
- *   float& radius)                     // 圆的半径
- *   cv::fitEllipse(InputArray points)  // 得到最小椭圆
+ *      InputArray points,                 // 得到最小区域圆形
+ *      Point2f& center,                   // 圆心位置
+ *      float& radius                      // 圆的半径
  *  )
+ *   cv::fitEllipse(InputArray points)  // 得到最小椭圆
  */
 void func(){
     auto src = getImage("../images/94147214_p0.png");
@@ -70,14 +70,14 @@ void func(){
     for (int i = 0; i < contours.size(); ++i) {
         //轮廓周围绘制矩形
         cv::approxPolyDP(cv::Mat(contours[i]), contours_ploy[i], 3, true);
-        //保存矩形数据
+        //得到轮廓周围最小矩形左上交点坐标和右下角点坐标，绘制一个矩形
         ploy_rects[i] = cv::boundingRect(contours_ploy[i]);
 
         //轮廓周围绘制圆和椭圆
         cv::minEnclosingCircle(contours_ploy[i], ccs[i], radius[i]);
         if (contours_ploy[i].size() > 5) {
-            myellipse[i] = fitEllipse(contours_ploy[i]);
-            minRects[i]  = minAreaRect(contours_ploy[i]);
+            myellipse[i] = fitEllipse(contours_ploy[i]);    //得到最小椭圆
+            minRects[i]  = minAreaRect(contours_ploy[i]);   //得到一个旋转的矩形，返回旋转矩形
         }
     }
 
