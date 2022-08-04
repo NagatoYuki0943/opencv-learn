@@ -19,7 +19,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
 
 
 /**
- * 开操作 - open
+ * 开操作 - open - 减少像素 - 断开
  * 先腐蚀后膨胀,可以去掉小的高亮点,让高亮更少
  *
  * cv::morphologyEx(src, dst, cv::MORPH_OPEN, kernel, anchor, iterations)
@@ -39,7 +39,7 @@ void open(){
 
 
 /**
- * 闭操作 - close
+ * 闭操作 - close - 增加像素 - 链接
  * 先膨胀后腐蚀,去掉小黑点,让高亮更多
  *
  * cv::morphologyEx(src, dst, cv::MORPH_CLOSE, kernel, anchor, iterations)
