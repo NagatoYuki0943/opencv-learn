@@ -39,7 +39,7 @@ void open(){
 
 
 /**
- * 闭操作 - close - 增加像素 - 链接
+ * 闭操作 - close - 增加像素 - 连接
  * 先膨胀后腐蚀,去掉小黑点,让高亮更多
  *
  * cv::morphologyEx(src, dst, cv::MORPH_CLOSE, kernel, anchor, iterations)
