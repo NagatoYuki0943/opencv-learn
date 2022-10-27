@@ -104,35 +104,13 @@ void multiChannelInvert(){
 }
 
 
-/**
- * 数据类型宏定义
- *  `S = 有符号整型 U = 无符号整型 F = 浮点型`
- *  `CV_8U` - 8位无符号整数（0…255）
- *  `CV_8S` - 8位有符号整数（-128…127）
- *  `CV_16U` - 16位无符号整数（0…65535）
- *  `CV_16S` - 16位有符号整数（-32768…32767）
- *  `CV_32S` - 32位有符号整数（-2147483648…2147483647）
- *  `CV_32F` - 32位浮点数（-FLT_MAX…FLT_MAX，INF，NAN）
- *  `CV_64F` - 64位浮点数（-DBL_MAX…DBL_MAX，INF，NAN）
- *
- *  后面的`C1、C2、C3`是什么意思呢？
- *  这里的`1、2、3代表的是通道数`
- */
-void uchar_float(){
-    auto image = getImage();
-    cv::imshow("1", image);
-    image.convertTo(image, CV_16UC3);
-    cv::imshow("2", image);
-    image.convertTo(image, CV_32FC3);
-    cv::imshow("3", image);
-}
+
 
 
 int main(){
     //getPixel();
     //singleChannelInvert();
     multiChannelInvert();
-    //uchar_float();
     cv::waitKey(0);
     return 0;
 }
