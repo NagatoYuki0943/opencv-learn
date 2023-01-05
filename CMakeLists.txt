@@ -4,7 +4,7 @@ project(opencv_learn_cpp)
 set(CMAKE_CXX_STANDARD 14)
 
 # opencv
-set(OpenCV_DIR D:/ai/opencv/build/x64/vc15/lib)
+set(OpenCV_DIR D:/ai/opencv/build/x64/vc16/lib)
 find_package(OpenCV REQUIRED)
 if(OpenCV_FOUND)
     message("OpenCV_INCLUDE_DIRS: " ${OpenCV_INCLUDE_DIRS})
