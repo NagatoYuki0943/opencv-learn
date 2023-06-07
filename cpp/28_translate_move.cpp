@@ -67,7 +67,7 @@ void translateTransformSize(cv::Mat const& src, cv::Mat& dst, int dx, int dy)
 int main()
 {
     cv::Mat src, dst, dst1;
-    src = cv::imread("../images/squirrel.jpg");
+    src = cv::imread("../../../images/squirrel.jpg");
 
     cv::imshow("src", src);
     translateTransform(src, dst, 50, 50);

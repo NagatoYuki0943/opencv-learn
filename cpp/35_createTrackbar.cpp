@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -57,8 +57,8 @@ cv::Mat src1, src2, dst;
 void on_trackbar(int, void*);
 
 void func(){
-    src1 = getImage("../images/59021351_p0.jpg");
-    src2 = getImage("../images/59880532_p0.jpg");
+    src1 = getImage("../../../images/59021351_p0.jpg");
+    src2 = getImage("../../../images/59880532_p0.jpg");
 
     //滑动条依附的窗口
     cv::namedWindow(win_name,cv::WindowFlags::WINDOW_AUTOSIZE);

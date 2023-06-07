@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -146,7 +146,7 @@ void circle(){
  *      - bool bottomLeftOrigin = false: 如果取值为TRUE，则Point org指定的点为插入文字的左上角位置，如果取值为默认值false则指定点为插入文字的左下角位置.
  */
 void text(){
-    auto image = getImage("../images/59880532_p0.jpg");
+    auto image = getImage("../../../images/59880532_p0.jpg");
 
     string text = "Confidence Score: 0.95";
 

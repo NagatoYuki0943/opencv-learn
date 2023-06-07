@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -31,7 +31,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *      iterations: 迭代次数
  */
 void dilate(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     int size = 3;
     //auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(size, size), cv::Point(-1, -1));
@@ -51,7 +51,7 @@ void dilate(){
  *      iterations: 迭代次数
  */
 void erode(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     int size = 3;
     //auto structureElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(size, size), cv::Point(-1, -1));

@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -43,7 +43,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *      5.绘制显示
  */
 void convex_hull(){
-    auto src = getImage("../images/94147214_p0.png");
+    auto src = getImage("../../../images/94147214_p0.png");
     cv::Mat blur, gray, canny;
 
     /* 第一步：高斯模糊 不一定需要 */

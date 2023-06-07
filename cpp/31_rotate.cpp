@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){

@@ -9,9 +9,9 @@ using namespace std;
 /**
  *
  */
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
-    //cv::Mat src = cv::imread("../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
+    //cv::Mat src = cv::imread("../../../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
         printf("could not find the image!\n");

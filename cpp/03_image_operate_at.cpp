@@ -6,7 +6,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -44,7 +44,7 @@ void getPixel(){
  *  单通道图片像素反差操作
  */
 void singleChannelInvert(){
-    cv::Mat image = cv::imread("../images/squirrel.jpg");
+    cv::Mat image = cv::imread("../../../images/squirrel.jpg");
     cv::Mat gray;
     cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
 
@@ -76,7 +76,7 @@ void singleChannelInvert(){
  *  Vec3w ushort
  */
 void multiChannelInvert(){
-    cv::Mat src = cv::imread("../images/squirrel.jpg");
+    cv::Mat src = cv::imread("../../../images/squirrel.jpg");
 
     cv::Mat dst = cv::Mat(src.size(), src.type());
     int rows = src.rows;

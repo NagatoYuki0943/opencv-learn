@@ -13,9 +13,9 @@ using namespace std;
  *      cv2.IMREAD_UNCHANGED：顾名思义，读入完整图片，包括alpha通道，可以直接写-1
  * @return
  */
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
-    //cv::Mat src = cv::imread("../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
+    //cv::Mat src = cv::imread("../../../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
         printf("could not find the image!\n");
@@ -35,7 +35,7 @@ void basic(){
     cv::cvtColor(src, dst, cv::ColorConversionCodes::COLOR_BGR2RGB);              // 变换色域, 可以选择具体的Codes: ColorConversionCodes
     //cv::cvtColor(src, dst, cv::COLOR_BGR2RGB);
     cv::imshow("squirrel", dst);                    // 显示图片
-    cv::imwrite("../images/squirrel_bgr.jpg", dst);
+    cv::imwrite("../../../images/squirrel_bgr.jpg", dst);
 }
 
 

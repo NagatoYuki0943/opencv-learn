@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -59,7 +59,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *      4.使用drawContours绘制轮廓
  */
 void fond_contour(){
-    auto src = getImage("../images/94147214_p0.png");
+    auto src = getImage("../../../images/94147214_p0.png");
     cv::Mat blur, gray, canny;
     cv::Mat dst = cv::Mat::zeros(src.size(), CV_8UC3);
     //src.copyTo(dst);  //可以在原图绘制

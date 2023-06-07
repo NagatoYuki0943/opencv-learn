@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -44,7 +44,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *  )
  */
 void houghLine(){
-    auto src = getImage("../images/hough_line.jpg");
+    auto src = getImage("../../../images/hough_line.jpg");
     cv::Mat gray, houghlines(src.size(), src.type()), houghlinesp(src.size(), src.type());
     cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
     cv::RNG rng = cv::RNG(43);
@@ -104,7 +104,7 @@ void houghLine(){
  *  )
  */
 void houghCircle(){
-    auto src = getImage("../images/hough_circle.jpg");
+    auto src = getImage("../../../images/hough_circle.jpg");
     cv::Mat median, gray, dst(src.size(), src.type());
 
     //中值滤波

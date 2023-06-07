@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -136,8 +136,8 @@ void calcHist(){
 void compareHist(){
     cv::Mat base, test1, test2, hsvbase, hsvtest1, hsvtest2;
     base  = getImage();
-    test1 = getImage("../images/59021351_p0.jpg");
-    test2 = getImage("../images/59880532_p0.jpg");
+    test1 = getImage("../../../images/59021351_p0.jpg");
+    test2 = getImage("../../../images/59880532_p0.jpg");
 
     cv::cvtColor(base,  hsvbase,  cv::ColorConversionCodes::COLOR_BGR2HSV);
     cv::cvtColor(test1, hsvtest1, cv::ColorConversionCodes::COLOR_BGR2HSV);

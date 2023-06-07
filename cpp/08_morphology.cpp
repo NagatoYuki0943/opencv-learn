@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -27,7 +27,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *      iterations: 迭代次数
  */
 void open(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     //auto kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
     auto kernel = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {5, 5}, {-1, -1});
@@ -47,7 +47,7 @@ void open(){
  *      iterations: 迭代次数
  */
 void close(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     //auto kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
     auto kernel = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {5, 5}, {-1, -1});
@@ -68,7 +68,7 @@ void close(){
  *      iterations: 迭代次数
  */
 void gradient(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     //auto kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
     auto kernel = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {5, 5}, {-1, -1});
@@ -90,7 +90,7 @@ void gradient(){
  *      iterations: 迭代次数
  */
 void topHat(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     //auto kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
     auto kernel = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {5, 5}, {-1, -1});
@@ -112,7 +112,7 @@ void topHat(){
  *      iterations: 迭代次数
  */
 void blackHat(){
-    auto src = getImage("../images/59021351_p0.jpg");
+    auto src = getImage("../../../images/59021351_p0.jpg");
     auto dst = cv::Mat(src.size(), src.type());
     //auto kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
     auto kernel = cv::getStructuringElement(cv::MorphShapes::MORPH_RECT, {5, 5}, {-1, -1});

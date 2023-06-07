@@ -24,7 +24,7 @@ static void onChange(int pos, void* userInput);
 
 int main(int argc, char* argv[])
 {
-    string strInFileName = "../images/squirrel.jpg";
+    string strInFileName = "../../../images/squirrel.jpg";
 
     imgIn = imread(strInFileName, IMREAD_GRAYSCALE);
     if (imgIn.empty()) //check whether the image is loaded or not

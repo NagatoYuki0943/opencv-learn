@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -37,7 +37,7 @@ const char* OUTPUT_TITLE = "remap demo";
 int index = 0;
 void update_map();
 void remap() {
-    src = getImage("../images/59021351_p0.jpg");
+    src = getImage("../../../images/59021351_p0.jpg");
     if (!src.data) {
         printf("could not load image...\n");
         exit(0);

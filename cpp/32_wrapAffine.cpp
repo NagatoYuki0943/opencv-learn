@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat srcImage = cv::imread(path);
     CV_Assert(srcImage.depth() == CV_8U);
     if(srcImage.empty()){
@@ -62,7 +62,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *
  */
 void func(){
-    auto srcImage = getImage("../images/94147214_p0.png");
+    auto srcImage = getImage("../../../images/94147214_p0.png");
     cv::Point2f srcTri[3];
     cv::Point2f dstTri[3];
 

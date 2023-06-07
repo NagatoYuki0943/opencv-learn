@@ -4,13 +4,13 @@
 
 using namespace std;
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return cv::imread(path);
 }
 
 
 void func(){
-    auto src = getImage("../images/94147214_p0.png");
+    auto src = getImage("../../../images/94147214_p0.png");
     cv::Mat gray, canny;
     cv::Mat dst = cv::Mat::zeros(src.size(), src.type());
 

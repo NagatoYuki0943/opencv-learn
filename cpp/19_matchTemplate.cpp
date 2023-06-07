@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -34,7 +34,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  */
 void matchTemplate(){
     auto src = getImage();
-    auto templ_image = getImage("../images/squirrel_template.jpg");
+    auto templ_image = getImage("../../../images/squirrel_template.jpg");
     cv::Mat dst;
 
     //返回图像 必须是单通道32位浮点数，假设源图像WxH,模板图像wxh, 则结果必须为W-w+1, H-h+1的大小

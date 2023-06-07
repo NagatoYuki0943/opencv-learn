@@ -7,7 +7,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -23,7 +23,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  */
 void func(){
     /* 第一步：imread导入彩色图像 */
-    auto src = getImage("../images/horizon_vertical.jpg");
+    auto src = getImage("../../../images/horizon_vertical.jpg");
 
     cv::Mat grayImg;
     /* 第二步：转为灰度图像cvtColor(src1, dst, COLOR_BGR2GRAY); */

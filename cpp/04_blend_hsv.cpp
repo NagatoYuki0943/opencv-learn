@@ -6,7 +6,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -28,8 +28,8 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *  saturate：用来确认取值合法
  */
 void blend(){
-    auto image1 = cv::imread("../images/59021351_p0.jpg", cv::IMREAD_COLOR);
-    auto image2 = cv::imread("../images/59880532_p0.jpg", cv::IMREAD_COLOR);
+    auto image1 = cv::imread("../../../images/59021351_p0.jpg", cv::IMREAD_COLOR);
+    auto image2 = cv::imread("../../../images/59880532_p0.jpg", cv::IMREAD_COLOR);
     auto blender = cv::Mat(image1.size(), image1.type());
 
     cv::addWeighted(image1, 0.5, image2, 0.5, 0, blender);

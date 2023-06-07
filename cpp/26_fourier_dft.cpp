@@ -8,7 +8,7 @@
 using namespace std;
 
 
-cv::Mat getImage(const string& path="../images/squirrel.jpg"){
+cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     cv::Mat src = cv::imread(path);
     CV_Assert(src.depth() == CV_8U);
     if(src.empty()){
@@ -65,7 +65,7 @@ cv::Mat getImage(const string& path="../images/squirrel.jpg"){
  *
  */
 void fourier(){
-    auto I = cv::imread("../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
+    auto I = cv::imread("../../../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
     cv::Mat padded;
     int m =  cv::getOptimalDFTSize(I.rows);     //高
     int n =  cv::getOptimalDFTSize(I.cols);     //列
