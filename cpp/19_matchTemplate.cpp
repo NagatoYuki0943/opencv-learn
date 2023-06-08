@@ -63,7 +63,7 @@ void matchTemplate(){
     }
 
     //绘制矩形,xy坐标是计算出来的,wh是模板图片宽高
-    cv::rectangle(dst,   cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows),
+    cv::rectangle(dst, cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows),
                     {0, 0, 255}, 2, cv::LineTypes::LINE_8);
     cv::rectangle(templ, cv::Rect(tempLoc.x, tempLoc.y, templ_image.cols, templ_image.rows),
                     {0, 0, 255}, 2, cv::LineTypes::LINE_8);

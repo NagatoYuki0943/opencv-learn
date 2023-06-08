@@ -177,11 +177,11 @@ void compareHist(){
     cv::addWeighted(test1, 0.5, test2, 0.5, 0, compare1_2);
 
     //                                                              文字左下角坐标
-    cv::putText(base,       to_string(basebase),  cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
+    cv::putText(base, to_string(basebase), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
                 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
-    cv::putText(test1,      to_string(basetest1), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
+    cv::putText(test1, to_string(basetest1), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
                 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
-    cv::putText(test2,      to_string(basetest2), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
+    cv::putText(test2, to_string(basetest2), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
                 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
     cv::putText(compare1_2, to_string(tes1test2), cv::Point(50, 50), CV_FONT_HERSHEY_COMPLEX,
                 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);

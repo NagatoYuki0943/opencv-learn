@@ -31,7 +31,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
  *  cv::findContours(
  *      InputOutputArray binImg,        // 输入图像，非0的像素被看成1,0的像素值保持不变，8-bit
  *      OutputArrayOfArrays contours,   // 全部发现的轮廓对象
- *      OutputArray, hierarchy          // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
+ *      OutputArray, hierarchy          // 图像的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
  *      int mode,                       // 轮廓返回的模式
  *      int method,                     // 发现方法
  *      Point offset=Point()            // 轮廓像素的位移，默认（0, 0）没有位移

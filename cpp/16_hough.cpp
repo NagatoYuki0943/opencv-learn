@@ -60,9 +60,9 @@ void houghLine(){
         double x0 = a * rho, y0 = b * rho;
         // 转换为平面坐标的四个点  400 这里是图像的宽高,设置不同绘图不同
         p1.x = cvRound(x0 + 400 * (-b));
-        p1.y = cvRound(y0 + 400 * (a));
         p2.x = cvRound(x0 - 400 * (-b));
-        p2.y = cvRound(y0 - 400 * (a));
+        p1.y = cvRound(y0 + 400 * a);
+        p2.y = cvRound(y0 - 400 * a);
         // cout << p1 << " " << p2 << endl;
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::line(houghlines, p1, p2, color, 3, cv::LineTypes::LINE_AA);

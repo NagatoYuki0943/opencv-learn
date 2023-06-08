@@ -34,9 +34,9 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
  *  cv::Sobel (
  *      InputArray Src  // 输入图像
  *      OutputArray dst // 输出图像，大小与输入图像一致
- *      int depth       // 输出图像深度.
+ *      int depth       // 输出图像深度
  *      Int dx.         // X方向，几阶导数
- *      int dy          // Y方向，几阶导数.
+ *      int dy          // Y方向，几阶导数
  *      int ksize       // SOBEL算子kernel大小，必须是奇数
  *      double scale = 1
  *      double delta = 0
@@ -51,9 +51,9 @@ void sobel(){
     /* 第二步：转化为灰度图像 */
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
     /* 第三步：求梯度x和y */
-    cv::Sobel(gray, xgrad, CV_16S, 1, 0, 3, 1,0, cv::BorderTypes::BORDER_DEFAULT);
-    cv::Sobel(gray, ygrad, CV_16S, 0, 1, 3);
-    cv::Sobel(gray, xy,    CV_16S, 1, 1, 3);    // 不能都有 xy
+    cv::Sobel(gray, xgrad, CV_16S, 1, 0, 3, 1, 0, cv::BorderTypes::BORDER_DEFAULT);
+    cv::Sobel(gray, ygrad, CV_16S, 0, 1, 3, 1, 0, cv::BorderTypes::BORDER_DEFAULT);
+    cv::Sobel(gray, xy,    CV_16S, 1, 1, 3, 1, 0, cv::BorderTypes::BORDER_DEFAULT);
     //增强，把任意类型的数据转化为CV_8U
     cv::convertScaleAbs(xgrad, xgrad);
     cv::convertScaleAbs(ygrad, ygrad);
@@ -93,7 +93,7 @@ void scharr(){
     cv::cvtColor(blur, gray, cv::COLOR_BGR2GRAY);
     /* 第三步：求梯度x和y */
     cv::Scharr(gray, xgrad, CV_16S, 1, 0, 1, 0, cv::BorderTypes::BORDER_REPLICATE);
-    cv::Scharr(gray, ygrad, CV_16S, 0, 1);
+    cv::Scharr(gray, ygrad, CV_16S, 0, 1, 1, 0, cv::BorderTypes::BORDER_REPLICATE);  // X,Y不能同时用
     //增强，把任意类型的数据转化为CV_8U
     cv::convertScaleAbs(xgrad, xgrad);
     cv::convertScaleAbs(ygrad, ygrad);

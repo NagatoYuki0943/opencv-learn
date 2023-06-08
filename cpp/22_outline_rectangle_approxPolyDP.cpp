@@ -19,7 +19,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
 
 
 /**
- *  廓周围绘制矩形框和圆形框
+ *  轮廓周围绘制矩形框和圆形框
  *
  *  轮廓周围绘制矩形 - API
  *  approxPolyDP(
@@ -60,12 +60,12 @@ void func(){
                      cv::CHAIN_APPROX_SIMPLE,cv::Point(0, 0));
 
     /* 第五步：找到poly,矩形,圆形,旋转矩形和椭圆的坐标等数据 */
-    vector<vector<cv::Point>> contours_ploy(contours.size());   //poly
-    vector<cv::Rect>          ploy_rects(contours.size());      //矩形
-    vector<cv::Point2f>       ccs(contours.size());             //圆形坐标
-    vector<float>             radius(contours.size());          //圆形半径
-    vector<cv::RotatedRect>   minRects(contours.size());        //旋转矩形
-    vector<cv::RotatedRect>   myellipse(contours.size());       //旋转椭圆
+    vector<vector<cv::Point>> contours_ploy(contours.size());   // poly
+    vector<cv::Rect>          ploy_rects(contours.size());      // 矩形
+    vector<cv::Point2f>       ccs(contours.size());             // 圆形坐标
+    vector<float>             radius(contours.size());          // 圆形半径
+    vector<cv::RotatedRect>   minRects(contours.size());        // 旋转矩形
+    vector<cv::RotatedRect>   myellipse(contours.size());       // 旋转椭圆
 
     for (int i = 0; i < contours.size(); ++i) {
         //轮廓周围绘制矩形
@@ -76,29 +76,29 @@ void func(){
         //轮廓周围绘制圆和椭圆
         cv::minEnclosingCircle(contours_ploy[i], ccs[i], radius[i]);
         if (contours_ploy[i].size() > 5) {
-            myellipse[i] = fitEllipse(contours_ploy[i]);    //得到最小椭圆
-            minRects[i]  = minAreaRect(contours_ploy[i]);   //得到一个旋转的矩形，返回旋转矩形
+            myellipse[i] = cv::fitEllipse(contours_ploy[i]);    // 得到最小椭圆
+            minRects[i]  = cv::minAreaRect(contours_ploy[i]);   // 得到一个旋转的矩形，返回旋转矩形
         }
     }
 
     /* 第六步：绘制,注释的部分是绘制矩形和圆形 */
     cv::RNG rng(43);
     cv::Mat drawImg = cv::Mat::zeros(src.size(), src.type());
-    //src.copyTo(drawImg);  //可以在原图绘制
+    //src.copyTo(drawImg);  // 可以在原图绘制
     cv::Point2f pts[4];
     for (size_t t = 0; t < contours.size(); t++) {
-        //随机颜色
+        // 随机颜色
         auto color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-        //绘制矩形和圆形
-        //cv::rectangle(drawImg, ploy_rects[t], color, 2, cv::LINE_8);
-        //cv::circle(drawImg, ccs[t], radius[t], color, 2, cv::LINE_8);
+        // 绘制矩形和圆形
+        // cv::rectangle(drawImg, ploy_rects[t], color, 2, cv::LINE_8);
+        // cv::circle(drawImg, ccs[t], radius[t], color, 2, cv::LINE_8);
 
         //绘制旋转矩形和椭圆
         if (contours_ploy[t].size() > 5) {
-            //椭圆
+            // 椭圆
             cv::ellipse(drawImg, myellipse[t], color, 1, cv::LINE_8);
             minRects[t].points(pts);
-            //旋转矩形,使用直线绘制
+            // 旋转矩形,使用直线绘制
             for (int r = 0; r < 4; r++) {
                 cv::line(drawImg, pts[r], pts[(r + 1) % 4], color, 1, cv::LINE_8);
             }

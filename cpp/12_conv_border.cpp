@@ -27,7 +27,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
  *      Mat kernel,     # 卷积核/模板
  *      Point anchor,   # 锚点位置
  *      double delta    # 计算出来的像素+delta
- * )
+ *  )
  */
 void conv() {
     auto src = getImage();
@@ -47,7 +47,7 @@ void conv() {
     cv::Mat sobel_kernel_y = (cv::Mat_<int>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
     cv::filter2D(src, dst_sobel_y, -1, sobel_kernel_y, {-1, -1}, 0.0);
 
-    //拉普拉斯算子
+    // 拉普拉斯算子
     cv::Mat laplace_kernel_y = (cv::Mat_<int>(3, 3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
     cv::filter2D(src, dst_laplace, -1, laplace_kernel_y, {-1, -1}, 0.0);
 
