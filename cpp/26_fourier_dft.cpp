@@ -67,8 +67,8 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
 void fourier(){
     auto I = cv::imread("../../../images/94147214_p0.png", cv::ImreadModes::IMREAD_GRAYSCALE);
     cv::Mat padded;
-    int m =  cv::getOptimalDFTSize(I.rows);     //高
-    int n =  cv::getOptimalDFTSize(I.cols);     //列
+    int m =  cv::getOptimalDFTSize(I.rows);     // 高
+    int n =  cv::getOptimalDFTSize(I.cols);     // 列
 
     //填充输入图像I，输入矩阵为padded，上方和左方不做填充处理
     cv::copyMakeBorder(I, padded, 0, m - I.rows, 0, n - I.cols,

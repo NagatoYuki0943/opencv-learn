@@ -67,32 +67,32 @@ void func(){
         for (int col = 0; col < raw_dist.cols; col++) {
             double dist = cv::pointPolygonTest(contours[0],
                                                cv::Point2f(static_cast<float>(col), static_cast<float>(row)), true);
-            //保存数据
+            // 保存数据
             raw_dist.at<float>(row, col) = static_cast<float>(dist);
         }
     }
 
-    //找raw_dist中最大值和最小值
+    // 找raw_dist中最大值和最小值
     double minValue, maxValue;
     cv::minMaxLoc(raw_dist, &minValue, &maxValue, 0, 0, cv::Mat());
     cv::Mat drawImg = cv::Mat::zeros(src.size(), CV_8UC3);
     for (int row = 0; row < drawImg.rows; row++) {
         for (int col = 0; col < drawImg.cols; col++) {
-            //遍历每个点的dist,大于0在内部,小于0在外部,等于0在边上
+            // 遍历每个点的dist,大于0在内部,小于0在外部,等于0在边上
             float dist = raw_dist.at<float>(row, col);
-            //内部
+            // 内部
             if (dist > 0) {
-                //[0] 代表蓝色
+                // [0] 代表蓝色
                 drawImg.at<cv::Vec3b>(row, col)[0] = (uchar)(abs(1.0 - (dist / maxValue)) * 255);
             }
-            //外部
+            // 外部
             else if (dist < 0) {
-                //[2] 代表红色
+                // [2] 代表红色
                 drawImg.at<cv::Vec3b>(row, col)[2] = (uchar)(abs(1.0 - (dist / minValue)) * 255);
             }
-            //边上
+            // 边上
             else {
-                //[0][1][2] 代表全部
+                // [0][1][2] 代表全部
                 drawImg.at<cv::Vec3b>(row, col)[0] = (uchar)(abs(255 - dist));
                 drawImg.at<cv::Vec3b>(row, col)[1] = (uchar)(abs(255 - dist));
                 drawImg.at<cv::Vec3b>(row, col)[2] = (uchar)(abs(255 - dist));

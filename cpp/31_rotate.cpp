@@ -19,7 +19,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
 
 
 /**
- *  检测竖直/平行的线
+ *  旋转
  */
 void func(){
     auto src = getImage();
