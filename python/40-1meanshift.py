@@ -19,11 +19,11 @@ import numpy as np
 import cv2 as cv
 
 # 1.获取图像
-cap = cv.VideoCapture('../video/DOG.wmv')
+cap = cv.VideoCapture('../videos/DOG.wmv')
 
 
 # 2.获取第一帧图像，并指定目标位置
-ret, frame = cap.read()
+res, frame = cap.read()
 # 2.1 目标位置(行, 高, 列, 宽)
 r, h, c, w = 197, 141, 0, 208
 #设置跟踪窗口 列, 行, 宽, 高
@@ -51,14 +51,14 @@ term_crit = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1)
 
 while True:
     # 4.2 获取每一帧图像
-    ret, frame = cap.read()
-    if ret == True:
+    res, frame = cap.read()
+    if res == True:
         # 4.3 计算直方图的反向投影
         hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
         dst = cv.calcBackProject([hsv], [0], roi_hist, [0, 180], 1)
 
         # 4.4 进行meanshift追踪
-        ret, track_window = cv.meanShift(dst, track_window, term_crit)
+        res, track_window = cv.meanShift(dst, track_window, term_crit)
 
         # 4.5 将追踪的位置绘制在视频上，并进行显示
         x, y, w, h = track_window
