@@ -9,6 +9,7 @@ cv2.namedWindow(winname="Image")
 image1 = image.copy()
 kernel = np.ones((3, 3))
 
+operation = []
 while True:
     cv2.imshow("Image", image1)
     # 键盘检测函数，0xFF是因为64位机器
@@ -21,6 +22,7 @@ while True:
             kernel=kernel,
             iterations=1
         )
+        operation.append("erode")
         print("erode")
     elif k == ord('d'):
         image1 = cv2.dilate(
@@ -28,6 +30,7 @@ while True:
             kernel,
             iterations=1
         )
+        operation.append("dilate")
         print("dilate")
     elif k == ord('o'):
         image1 = cv2.morphologyEx(
@@ -36,6 +39,7 @@ while True:
             kernel=kernel,
             iterations=1,
         )
+        operation.append("open")
         print("open")
     elif k == ord('c'):
         image1 = cv2.morphologyEx(
@@ -44,11 +48,15 @@ while True:
             kernel=kernel,
             iterations=1,
         )
+        operation.append("close")
         print("close")
     elif k == ord('r'):
         image1 = image.copy()
+        operation = []
         print("origin image")
     elif k == ord('q'):
         break
 
 cv2.destroyAllWindows()
+
+print(operation)
