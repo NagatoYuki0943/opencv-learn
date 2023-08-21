@@ -115,7 +115,7 @@ void customMatrix() {
 
     //生成一个2x3x5的Mat，数据为double型
     cv::Mat M = cv::Mat::zeros(2, 3, CV_32FC(5));
-    std::cout << "channel = " << M.channels() << endl; 
+    std::cout << "channel = " << M.channels() << endl;
     // channel = 5
 
     for (int i = 0; i < M.rows; i++)
@@ -124,7 +124,7 @@ void customMatrix() {
         {
             for (int c = 0; c < M.channels(); c++)
             {
-                //给M的每一个元素赋值                
+                //给M的每一个元素赋值
                 M.at<Vec5d>(i, j)[c] = c * 0.01;
             }
         }
