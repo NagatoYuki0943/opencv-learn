@@ -114,7 +114,7 @@ void customMatrix() {
     typedef cv::Vec<double, 5> Vec5d;
 
     // 生成一个2x3x5的Mat，数据为double型
-    cv::Mat M = cv::Mat::zeros(2, 3, CV_32FC(5));
+    cv::Mat M = cv::Mat::zeros(2, 3, CV_64FC(5));
     std::cout << "channel = " << M.channels() << endl;
     // channel = 5
 
