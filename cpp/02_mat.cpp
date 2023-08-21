@@ -64,8 +64,10 @@ void clone(){
  */
 void info(){
     auto src = getImage();
-    cout << "col: " << src.cols << "; row: " << src.rows << "; channel: " << src.channels() << "; depth: " << src.depth() << endl;
-    // col: 474; row: 266; channel: 3; depth: 0
+    cout << "rows = " << src.rows << "; cols = " << src.cols << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
+    cout << "height = " << src.size().height << "; width: = " << src.size().width << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
+    // rows   = 266; cols   = 474; channel = 3; depth = 0
+    // height = 266; width: = 474; channel = 3; depth = 0
     cout << "type: " << src.type() << endl;
     // type: 16
 }
@@ -103,7 +105,7 @@ void cvarray(){
 int main(){
     //create();
     //clone();
-    //info();
+    info();
     //ptr();
     cvarray();
     cv::waitKey(0);
