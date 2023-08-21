@@ -76,25 +76,30 @@ void singleChannelInvert(){
  *  Vec3w ushort
  */
 void multiChannelInvert(){
-    cv::Mat src = cv::imread("../../../images/squirrel.jpg");
+    cv::Mat src = getImage();
 
     cv::Mat dst = cv::Mat(src.size(), src.type());
     int rows = src.rows;
     int cols  = src.cols;
     int channel = src.channels();
 
+    // row -> col -> channel
     for(int row = 0; row < rows; ++row){
         for (int col = 0; col < cols; ++col) {
-            if(channel == 1){
-                uchar g = src.at<uchar>(row, col);
-                src.at<uchar>(row, col) = 255 - g;
-            }else{
-                uchar b = src.at<cv::Vec3b>(row, col)[0];
-                uchar g = src.at<cv::Vec3b>(row, col)[1];
-                uchar r = src.at<cv::Vec3b>(row, col)[2];
-                dst.at<cv::Vec3b>(row, col)[0] = 255 - b;
-                dst.at<cv::Vec3b>(row, col)[1] = 255 - g;
-                dst.at<cv::Vec3b>(row, col)[2] = 255 - r;
+            // if(channel == 1){
+            //     uchar g = src.at<uchar>(row, col);
+            //     src.at<uchar>(row, col) = 255 - g;
+            // }else{
+            //     uchar b = src.at<cv::Vec3b>(row, col)[0];
+            //     uchar g = src.at<cv::Vec3b>(row, col)[1];
+            //     uchar r = src.at<cv::Vec3b>(row, col)[2];
+            //     dst.at<cv::Vec3b>(row, col)[0] = 255 - b;
+            //     dst.at<cv::Vec3b>(row, col)[1] = 255 - g;
+            //     dst.at<cv::Vec3b>(row, col)[2] = 255 - r;
+            // }
+            for (int ch = 0; ch < channel; ++ch) {
+                uchar t = src.at<cv::Vec3b>(row, col)[ch];
+                dst.at<cv::Vec3b>(row, col)[ch] = 255 - t;
             }
         }
     }
@@ -104,10 +109,37 @@ void multiChannelInvert(){
 }
 
 
+void customMatrix() {
+    //自定义数据类型
+    typedef cv::Vec<double, 5> Vec5d;
+
+    //生成一个2x3x5的Mat，数据为double型
+    cv::Mat M = cv::Mat::zeros(2, 3, CV_32FC(5));
+    std::cout << "channel = " << M.channels() << endl; 
+    // channel = 5
+
+    for (int i = 0; i < M.rows; i++)
+    {
+        for (int j = 0; j < M.cols; j++)
+        {
+            for (int c = 0; c < M.channels(); c++)
+            {
+                //给M的每一个元素赋值                
+                M.at<Vec5d>(i, j)[c] = c * 0.01;
+            }
+        }
+    }
+    cout << M << endl;//输出矩阵
+    // [0, 0.01, 0.02, 0.03, 0.04, 0, 0.01, 0.02, 0.03, 0.04, 0, 0.01, 0.02, 0.03, 0.04;
+    //  0, 0.01, 0.02, 0.03, 0.04, 0, 0.01, 0.02, 0.03, 0.04, 0, 0.01, 0.02, 0.03, 0.04]
+}
+
+
 int main(){
     //getPixel();
     //singleChannelInvert();
     multiChannelInvert();
+    customMatrix();
     cv::waitKey(0);
     return 0;
 }
