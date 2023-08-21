@@ -64,10 +64,14 @@ void clone(){
  */
 void info(){
     auto src = getImage();
-    cout << "rows = " << src.rows << "; cols = " << src.cols << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
-    cout << "height = " << src.size().height << "; width: = " << src.size().width << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
-    // rows   = 266; cols   = 474; channel = 3; depth = 0
-    // height = 266; width: = 474; channel = 3; depth = 0
+    cout << "rows = " << src.rows << "; cols = " << src.cols << endl;
+    cout << "height = " << src.size().height << "; width = " << src.size().width << endl;
+    cout << "size[0] = " << src.size[0] << "; size[1] = " << src.size[1] << endl;
+    // rows    = 266; cols    = 474
+    // height  = 266; width   = 474
+    // size[0] = 266; size[1] = 474
+    cout << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
+    // channel = 3; depth = 0
     cout << "type: " << src.type() << endl;
     // type: 16
 }
