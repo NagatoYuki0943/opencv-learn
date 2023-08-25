@@ -47,7 +47,6 @@ double beta;                            //第二幅图权重
 string win_name = "mixed name";         //窗口名字
 cv::Mat src1, src2, dst;
 
-
 /**
  *  回调函数
  *  参数说明:
@@ -93,7 +92,6 @@ void on_trackbar(int, void*){
     cv::addWeighted(src1, alpha, src2, beta, 0.0, dst);
     cv::imshow(win_name, dst);
 }
-
 
 int main(){
     func();

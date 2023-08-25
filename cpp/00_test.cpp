@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return cv::imread(path);
 }

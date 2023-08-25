@@ -16,6 +16,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return src;
 }
 
+
 /**
  *  获取像素点数据
  *  src.at<uchar>(row, col)  必须是uchar类型
@@ -135,11 +136,41 @@ void customMatrix() {
 }
 
 
+/**
+* 将Mat中的数据转移到Vector中
+*/
+void Mat2Vector() {
+    vector<int> vec1;
+    for (int i = 0; i < 25; i++) {
+        vec1.push_back(i);
+    }
+    cv::Mat mat(5, 5, CV_8UC1, vec1.data());                    // create a 10x10 matrix of floating-point data
+
+    // 使用指针
+    std::vector<int> vec2;
+    vec2.assign((int*)mat.datastart, (int*)mat.dataend);
+    for (int& i : vec2) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // 使用at
+    vector<int> vec3;
+    for (int i = 0; i < mat.rows * mat.cols * mat.channels(); ++i) {
+        cout << mat.at<int>(i) << endl;
+        vec3.push_back(mat.at<int>(i)); // add the i-th element of the matrix to the vector
+    }
+    cout << endl;
+    // 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+}
+
+
 int main(){
     //getPixel();
     //singleChannelInvert();
     multiChannelInvert();
     customMatrix();
+    Mat2Vector();
     cv::waitKey(0);
     return 0;
 }

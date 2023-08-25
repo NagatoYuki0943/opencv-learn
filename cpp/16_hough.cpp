@@ -17,6 +17,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return src;
 }
 
+
 /**
  *  查找直线
  *  标准的霍夫变换 cv::HoughLines从平面坐标转换到霍夫空间，最终输出是 （θ，r）表示极坐标空间
@@ -124,6 +125,7 @@ void houghCircle(){
     cv::imshow("gray", gray);
     cv::imshow("dst", dst);
 }
+
 
 int main(){
     houghLine();

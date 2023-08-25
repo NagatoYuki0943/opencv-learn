@@ -62,6 +62,7 @@ void remap() {
     }
 }
 
+
 void update_map() {
     for (int row = 0; row < src.rows; row++) {
         for (int col = 0; col < src.cols; col++) {

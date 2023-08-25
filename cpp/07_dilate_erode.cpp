@@ -17,6 +17,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return src;
 }
 
+
 /**
  *  腐蚀和膨胀是对白色部分（高亮部分）而言的，不是黑色部分。
  *  膨胀就是图像中的高亮部分进行膨胀，“领域扩张”，效果图拥有比原图更大的高亮区域。

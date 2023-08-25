@@ -17,6 +17,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return src;
 }
 
+
 /**
  *  https://blog.csdn.net/weixin_42296411/article/details/80901080
  *  clamp(x, 0, 1) 设置上下限 https://github.com/NagatoYuki0943/anomalib-patchcore-openvino/blob/main/cmake/utils.cpp#L97
@@ -181,6 +182,7 @@ cv::Mat Normalize(cv::Mat& src, const std::vector<float>& mean, const std::vecto
     cv::multiply(dst, std_scalar, dst);
     return dst;
 }
+
 
 void test_normalize(){
     auto src = getImage();

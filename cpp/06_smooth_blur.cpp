@@ -134,7 +134,6 @@ void bilateral(){
 }
 
 
-
 /**
  *  方框滤波(类似卷积,默认参数都为1,可以理解为求均值)
  *  void cv::boxFilter(

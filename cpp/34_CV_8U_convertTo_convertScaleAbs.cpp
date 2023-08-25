@@ -16,6 +16,7 @@ cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
     return src;
 }
 
+
 void func(){
     auto src = getImage();
     cv::imshow("src", src);
@@ -45,7 +46,6 @@ void func(){
 
     cv::imshow("dst", dst);
 }
-
 
 
 int main(){
