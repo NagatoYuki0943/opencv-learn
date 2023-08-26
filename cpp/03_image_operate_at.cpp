@@ -140,28 +140,28 @@ void customMatrix() {
 * 将Mat中的数据转移到Vector中
 */
 void Mat2Vector() {
-    vector<int> vec1;
+    vector<float> vec1;
     for (int i = 0; i < 25; i++) {
         vec1.push_back(i);
     }
-    cv::Mat mat(5, 5, CV_8UC1, vec1.data());                    // create a 10x10 matrix of floating-point data
+    cv::Mat mat(5, 5, CV_32FC1, vec1.data());   // create a 5x5 matrix of floating-point data
 
-    // 使用指针
-    std::vector<int> vec2;
-    vec2.assign((int*)mat.datastart, (int*)mat.dataend);
-    for (int& i : vec2) {
+    // 使用指针 结果不对
+    std::vector<float> vec2(mat.ptr(), mat.ptr() + mat.total() * mat.channels());
+    for (float& i : vec2) {
         cout << i << " ";
     }
+    // 0 0 0 0 0 0 128 63 0 0 0 64 0 0 64 64 0 0 128 64 0 0 160 64 0
     cout << endl;
 
     // 使用at
-    vector<int> vec3;
-    for (int i = 0; i < mat.rows * mat.cols * mat.channels(); ++i) {
-        cout << mat.at<int>(i) << endl;
-        vec3.push_back(mat.at<int>(i)); // add the i-th element of the matrix to the vector
+    vector<float> vec3;
+    for (int i = 0; i < mat.total() * mat.channels(); ++i) {
+        cout << mat.at<float>(i) << " ";
+        vec3.push_back(mat.at<float>(i));       // add the i-th element of the matrix to the vector
     }
-    cout << endl;
     // 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+    cout << endl;
 }
 
 

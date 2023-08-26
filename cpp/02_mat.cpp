@@ -72,6 +72,8 @@ void info(){
     // size[0] = 266; size[1] = 474
     cout << "; channel = " << src.channels() << "; depth = " << src.depth() << endl;
     // channel = 3; depth = 0
+    cout << "total = " << src.total() << " = height * width = " << src.size().height * src.size().width << endl;
+    // total = 126084 = height * width = 126084
     cout << "type: " << src.type() << endl;
     // type: 16
 }
