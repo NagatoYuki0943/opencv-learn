@@ -146,12 +146,13 @@ void Mat2Vector() {
     }
     cv::Mat mat(5, 5, CV_32FC1, vec1.data());   // create a 5x5 matrix of floating-point data
 
-    // 使用指针 结果不对
-    std::vector<float> vec2(mat.ptr(), mat.ptr() + mat.total() * mat.channels());
+    // 使用指针
+    // vec2.assign((float*)mat.datastart, (float*)mat.dataend);
+    vector<float> vec2((float*)mat.datastart, (float*)mat.dataend);
     for (float& i : vec2) {
         cout << i << " ";
     }
-    // 0 0 0 0 0 0 128 63 0 0 0 64 0 0 64 64 0 0 128 64 0 0 160 64 0
+    // 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
     cout << endl;
 
     // 使用at
