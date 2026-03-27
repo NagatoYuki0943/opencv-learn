@@ -1,112 +1,146 @@
-//https://blog.csdn.net/Cream_Cicilian/article/details/105547846
-
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui_c.h>
 #include <iostream>
+#include <vector>
+#include <string>
+#include <opencv2/opencv.hpp> // 引入 OpenCV 头文件
+#include "global_vars.hpp"
+#include "point_polygon_test.hpp"
 
-using namespace std;
 
+// 主功能函数
+// 参数 1: boxes - YOLO检测框的集合
+// 参数 2: polygon - 表示多边形顶点的集合 (OpenCV 格式)
+// 返回值: 在多边形内的检测框在原始 vector 中的索引 (Index)
+std::vector<int> filter_boxes_in_polygon(
+    const std::vector<Global::YoloDetectBox> &boxes,
+    const std::vector<cv::Point> &polygon)
+{
+    std::vector<int> inside_indices;
 
-cv::Mat getImage(const string& path="../../../images/squirrel.jpg"){
-    cv::Mat src = cv::imread(path);
-    CV_Assert(src.depth() == CV_8U);
-    if(src.empty()){
-        printf("could not find the image!\n");
-        exit(0);
+    // 如果多边形顶点少于 3 个，无法构成有效区域
+    if (polygon.size() < 3)
+    {
+        return inside_indices;
     }
-    return src;
-}
 
+    for (size_t i = 0; i < boxes.size(); ++i)
+    {
+        // 计算 YOLO 检测框的中心点
+        // 注意：cv::pointPolygonTest 推荐传入 cv::Point2f 类型的点
+        cv::Point2f center(
+            (boxes[i].left + boxes[i].right) / 2.0f,
+            (boxes[i].top + boxes[i].bottom) / 2.0f);
+
+        // 调用 OpenCV 的点多边形测试函数
+        // 参数 measureDist = false: 只返回拓扑位置（1 在内部，0 在边界，-1 在外部）
+        double result = cv::pointPolygonTest(polygon, center, false);
+
+        // 包含在内部 (result > 0) 或正好在边界上 (result == 0)
+        if (result >= 0)
+        {
+            inside_indices.push_back(i);
+        }
+    }
+
+    return inside_indices;
+}
 
 /**
- *  测试一个点是否在给定的多边形内部，边缘或者外部
- *  pointPolygonTest(
- *      InputArray contour, // 输入的轮廓
- *      Point2f pt,         // 测试点
- *      bool measureDist    // 是否返回距离值，如果是false，1表示在内面，0表示在边界上，-1表示在外部，true返回实际距离
- *  )
- *  返回数据是double类型  大于0: 内部;  等于0:边缘;  小于0: 外部
- *
- *  实现步骤
- *      1.构建一张400x400大小的图片， Mat::Zero(400, 400, CV_8UC1)
- *      2.画上一个六边形的闭合区域line
- *      3.发现轮廓
- *      4.对图像中所有像素点做点 多边形测试，得到距离，归一化后显示。
+ * @brief 在图像上绘制封闭的多边形线条
+ * @param image 要在其上绘制的图像 (cv::Mat)
+ * @param polygon_points 多边形的顶点集合 (std::vector<cv::Point>)
+ * @param color 线条颜色 (cv::Scalar，例如 cv::Scalar(0, 255, 0) 为绿色)
+ * @param thickness 线条粗细 (int，默认为 2)
  */
-void func(){
-    int r = 100;
-
-    /* 1.构建一张400x400大小的图片， Mat::Zero(400, 400, CV_8UC1) */
-    cv::Mat src = cv::Mat::zeros(r * 4, r * 4, CV_8UC1);
-
-    /* 2.画上一个六边形的闭合区域line */
-    vector<cv::Point2f> vert(6);
-    vert[0] = cv::Point(3 * r / 2, static_cast<int>(1.34*r));
-    vert[1] = cv::Point(1 * r,     2 * r);
-    vert[2] = cv::Point(3 * r / 2, static_cast<int>(2.866 * r));
-    vert[3] = cv::Point(5 * r / 2, static_cast<int>(2.866 * r));
-    vert[4] = cv::Point(3 * r,     2 * r);
-    vert[5] = cv::Point(5 * r / 2, static_cast<int>(1.34 * r));
-    for (int i = 0; i < 6; ++i) {
-        // `% 6` 会在 6 % 6 时 = 0, 回到原点
-        cv::line(src, vert[i], vert[(i+1) % 6], cv::Scalar(255), 3, cv::LINE_4, 0);
+void draw_closed_polygon(
+    cv::Mat &image,
+    const std::vector<cv::Point> &polygon_points,
+    const cv::Scalar &color,
+    int thickness)
+{
+    // 1. 数据检查：至少需要 2 个点才能画线（虽然 3 个点才能构成封闭平面）
+    if (polygon_points.size() < 2)
+    {
+        return;
     }
 
-    /* 3.发现轮廓 */
-    vector<vector<cv::Point>> contours;     // 全部发现的轮廓对象
-    vector<cv::Vec4i> hierarchy;            // 图该的拓扑结构，可选，该轮廓发现算法正是基于图像拓扑结构实现。
-    cv::Mat csrc;
-    src.copyTo(csrc);
-    auto mode = cv::RetrievalModes::RETR_TREE;
-    cv::findContours(csrc, contours, hierarchy, mode,
-                     cv::CHAIN_APPROX_SIMPLE,cv::Point(0, 0));
+    // 2. 准备 cv::polylines 所需的数据结构
+    // cv::polylines 接收的是一个“多边形列表”，即 vector<vector<Point>>。
+    // 即使我们只画一个多边形，也需要把它包装进一层 vector 中。
+    std::vector<std::vector<cv::Point>> polylines_data;
+    polylines_data.push_back(polygon_points);
 
-    /* 4.测试一个点是否在给定的多边形内部，边缘或者外部 */
-    cv::Mat raw_dist = cv::Mat::zeros(csrc.size(), CV_32FC1);
-    for (int row = 0; row < raw_dist.rows; row++) {
-        for (int col = 0; col < raw_dist.cols; col++) {
-            double dist = cv::pointPolygonTest(contours[0],
-                                               cv::Point2f(static_cast<float>(col), static_cast<float>(row)), true);
-            // 保存数据
-            raw_dist.at<float>(row, col) = static_cast<float>(dist);
-        }
-    }
-
-    // 找raw_dist中最大值和最小值
-    double minValue, maxValue;
-    cv::minMaxLoc(raw_dist, &minValue, &maxValue, 0, 0, cv::Mat());
-    cv::Mat drawImg = cv::Mat::zeros(src.size(), CV_8UC3);
-    for (int row = 0; row < drawImg.rows; row++) {
-        for (int col = 0; col < drawImg.cols; col++) {
-            // 遍历每个点的dist,大于0在内部,小于0在外部,等于0在边上
-            float dist = raw_dist.at<float>(row, col);
-            // 内部
-            if (dist > 0) {
-                // [0] 代表蓝色
-                drawImg.at<cv::Vec3b>(row, col)[0] = (uchar)(abs(1.0 - (dist / maxValue)) * 255);
-            }
-            // 外部
-            else if (dist < 0) {
-                // [2] 代表红色
-                drawImg.at<cv::Vec3b>(row, col)[2] = (uchar)(abs(1.0 - (dist / minValue)) * 255);
-            }
-            // 边上
-            else {
-                // [0][1][2] 代表全部
-                drawImg.at<cv::Vec3b>(row, col)[0] = (uchar)(abs(255 - dist));
-                drawImg.at<cv::Vec3b>(row, col)[1] = (uchar)(abs(255 - dist));
-                drawImg.at<cv::Vec3b>(row, col)[2] = (uchar)(abs(255 - dist));
-            }
-        }
-    }
-
-    cv::imshow("src", src);
-    cv::imshow("dst", drawImg);
+    // 3. 调用函数绘制
+    // 参数 1: 目标图像
+    // 参数 2: 顶点数组的数组
+    // 参数 3: 是否封闭 (true 代表自动收尾相连)
+    // 参数 4: 颜色
+    // 参数 5: 线条粗细
+    // 参数 6: 线条类型 (LINE_AA 代表抗锯齿，线条更平滑)
+    cv::polylines(image, polylines_data, true, color, thickness, cv::LINE_AA);
 }
 
+int main()
+{
+    // 1. 创建一张空白的黑色图像用于测试 (高600, 宽800)
+    cv::Mat test_img = cv::Mat::zeros(600, 800, CV_8UC3);
 
-int main(){
-    func();
+    // 2. 定义一个凹多边形的顶点
+    std::vector<cv::Point> my_polygon;
+    my_polygon.push_back(cv::Point(100, 100)); // 顶点 1
+    my_polygon.push_back(cv::Point(400, 50));  // 顶点 2
+    my_polygon.push_back(cv::Point(700, 150)); // 顶点 3
+    my_polygon.push_back(cv::Point(500, 400)); // 顶点 4
+    my_polygon.push_back(cv::Point(400, 250)); // 顶点 5 (造成凹陷的点)
+    my_polygon.push_back(cv::Point(200, 500)); // 顶点 6
+
+    // 3. 模拟 YOLO 检测结果
+    std::vector<Global::YoloDetectBox> boxes;
+    // 框1：中心点 (300, 200) -> 应该在多边形内
+    boxes.push_back({0, "person", 0.9f, 280, 150, 320, 250, 1});
+    // 框2：中心点 (100, 400) -> 应该在多边形外 (左下角空白处)
+    boxes.push_back({0, "person", 0.8f, 80, 350, 120, 450, 2});
+    // 框3：中心点 (400, 350) -> 应该在多边形外 (刚好掉进那个凹陷区域)
+    boxes.push_back({2, "car", 0.95f, 350, 300, 450, 400, 3});
+
+    // 4. 执行检测算法，获取在区域内的框的索引
+    std::vector<int> inside_indices = filter_boxes_in_polygon(boxes, my_polygon);
+
+    // 5. 可视化绘制
+    // 5.1 绘制多边形边框 (黄色)
+    cv::Scalar poly_color(0, 255, 255);
+    draw_closed_polygon(test_img, my_polygon, poly_color, 3);
+
+    // 5.2 遍历所有检测框并绘制
+    for (size_t i = 0; i < boxes.size(); ++i)
+    {
+        const auto &box = boxes[i];
+
+        // 计算中心点用于画圆
+        cv::Point center(
+            (box.left + box.right) / 2,
+            (box.top + box.bottom) / 2);
+
+        // 判断当前框是否在 inside_indices 列表中
+        bool is_inside = std::find(inside_indices.begin(), inside_indices.end(), i) != inside_indices.end();
+
+        // 设定颜色：内部为绿色，外部为红色 (BGR格式)
+        cv::Scalar box_color = is_inside ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255);
+
+        // 绘制矩形框
+        cv::rectangle(test_img, cv::Point(box.left, box.top), cv::Point(box.right, box.bottom), box_color, 2, cv::LINE_AA);
+
+        // 绘制实心中心点 (半径为4，-1代表实心填充)
+        cv::circle(test_img, center, 4, box_color, -1, cv::LINE_AA);
+
+        // 绘制 Track ID 文本
+        std::string label = box.class_name;
+        cv::putText(test_img, label, cv::Point(box.left, box.top - 5),
+                    cv::FONT_HERSHEY_SIMPLEX, 0.6, box_color, 2, cv::LINE_AA);
+    }
+
+    // 6. 显示结果
+    cv::imshow("YOLO Polygon Detection", test_img);
     cv::waitKey(0);
+
     return 0;
 }
