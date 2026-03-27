@@ -1,26 +1,35 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <opencv2/opencv.hpp> // 引入 OpenCV 头文件
-#include "global_vars.hpp"
-#include "point_polygon_test.hpp"
+#include <opencv2/opencv.hpp>
 
+struct YoloDetectBox
+{
+    int class_id;           // 类别 id
+    std::string class_name; // 类别名称
+    float confidence;       // 置信度
+    int left;               // 左上角 x 坐标
+    int top;                // 左上角 y 坐标
+    int right;              // 右下角 x 坐标
+    int bottom;             // 右下角 y 坐标
+};
 
 // 主功能函数
 // 参数 1: boxes - YOLO检测框的集合
 // 参数 2: polygon - 表示多边形顶点的集合 (OpenCV 格式)
 // 返回值: 在多边形内的检测框在原始 vector 中的索引 (Index)
 std::vector<int> filter_boxes_in_polygon(
-    const std::vector<Global::YoloDetectBox> &boxes,
+    const std::vector<YoloDetectBox> &boxes,
     const std::vector<cv::Point> &polygon)
 {
     std::vector<int> inside_indices;
 
+    if (boxes.empty())
+        return inside_indices;
+
     // 如果多边形顶点少于 3 个，无法构成有效区域
     if (polygon.size() < 3)
-    {
         return inside_indices;
-    }
 
     for (size_t i = 0; i < boxes.size(); ++i)
     {
@@ -36,9 +45,7 @@ std::vector<int> filter_boxes_in_polygon(
 
         // 包含在内部 (result > 0) 或正好在边界上 (result == 0)
         if (result >= 0)
-        {
             inside_indices.push_back(i);
-        }
     }
 
     return inside_indices;
@@ -59,9 +66,7 @@ void draw_closed_polygon(
 {
     // 1. 数据检查：至少需要 2 个点才能画线（虽然 3 个点才能构成封闭平面）
     if (polygon_points.size() < 2)
-    {
         return;
-    }
 
     // 2. 准备 cv::polylines 所需的数据结构
     // cv::polylines 接收的是一个“多边形列表”，即 vector<vector<Point>>。
@@ -86,6 +91,7 @@ int main()
 
     // 2. 定义一个凹多边形的顶点
     std::vector<cv::Point> my_polygon;
+    // x, y
     my_polygon.push_back(cv::Point(100, 100)); // 顶点 1
     my_polygon.push_back(cv::Point(400, 50));  // 顶点 2
     my_polygon.push_back(cv::Point(700, 150)); // 顶点 3
@@ -94,13 +100,19 @@ int main()
     my_polygon.push_back(cv::Point(200, 500)); // 顶点 6
 
     // 3. 模拟 YOLO 检测结果
-    std::vector<Global::YoloDetectBox> boxes;
+    std::vector<YoloDetectBox> boxes;
     // 框1：中心点 (300, 200) -> 应该在多边形内
-    boxes.push_back({0, "person", 0.9f, 280, 150, 320, 250, 1});
+    boxes.push_back({0, "person", 0.9f, 280, 150, 320, 250});
     // 框2：中心点 (100, 400) -> 应该在多边形外 (左下角空白处)
-    boxes.push_back({0, "person", 0.8f, 80, 350, 120, 450, 2});
+    boxes.push_back({0, "person", 0.8f, 80, 350, 120, 450});
     // 框3：中心点 (400, 350) -> 应该在多边形外 (刚好掉进那个凹陷区域)
-    boxes.push_back({2, "car", 0.95f, 350, 300, 450, 400, 3});
+    boxes.push_back({1, "bicycle", 0.95f, 350, 300, 450, 400});
+    // 框4：中心点 (500, 150) -> 应该在多边形内
+    boxes.push_back({2, "car", 0.85f, 450, 100, 550, 200});
+    // 框5：中心点 (100, 100) -> 应该在多边形上 (左上角)
+    boxes.push_back({3, "motorcycle", 0.7f, 40, 50, 160, 150});
+    // 框6：中心点 (700, 300) -> 应该在多边形外 (右下角空白处)
+    boxes.push_back({4, "bus", 0.6f, 650, 250, 750, 350});
 
     // 4. 执行检测算法，获取在区域内的框的索引
     std::vector<int> inside_indices = filter_boxes_in_polygon(boxes, my_polygon);
