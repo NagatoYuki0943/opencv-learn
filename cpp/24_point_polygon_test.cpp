@@ -112,7 +112,7 @@ void test_filter_boxes_in_polygon()
     // 框6：中心点 (700, 300) -> 应该在多边形外 (右下角空白处)
     boxes.push_back({4, "bus", 0.6f, 650, 250, 750, 350});
 
-    // 4. 执行检测算法，获取在区域内的检测框【修改点：接收框列表】
+    // 4. 执行检测算法，获取在区域内的检测框
     std::vector<Global::YoloDetectBox> inside_boxes = filter_boxes_in_polygon(boxes, my_polygon);
 
     // 5. 可视化绘制
