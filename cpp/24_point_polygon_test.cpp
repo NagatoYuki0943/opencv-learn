@@ -18,6 +18,56 @@ struct YoloDetectBox
  * @brief 在多边形区域内过滤 YOLO 检测框
  * @param boxes YOLO 检测框的集合 (std::vector<Global::YoloDetectBox>)
  * @param polygon 表示多边形顶点的集合 (std::vector<cv::Point>)
+ * @return 在多边形内的检测框 index 集合 (std::vector<int>)
+ */
+std::vector<int> filter_boxe_ids_in_polygon(
+    const std::vector<Global::YoloDetectBox> &boxes,
+    const std::vector<cv::Point> &polygon)
+{
+    if (boxes.empty())
+        return {};
+
+    // 如果多边形顶点少于 3 个，无法构成有效区域，保持原逻辑：视为全部在内部
+    if (polygon.size() < 3)
+    {
+        std::vector<int> index_list;
+        for (int i = 0; i < boxes.size(); i++)
+        {
+            index_list.push_back(i);
+        }
+        return index_list; // 直接返回原列表的 id
+    }
+
+    std::vector<int> inside_ids;
+    inside_ids.reserve(boxes.size());
+
+    for (int i = 0; i < boxes.size(); i++)
+    {
+        auto &box = boxes[i];
+        // 计算 YOLO 检测框的中心点
+        cv::Point2f center(
+            (box.left + box.right) / 2.0f,
+            (box.top + box.bottom) / 2.0f);
+
+        // 调用 OpenCV 的点多边形测试函数
+        // 参数 measureDist = false: 只返回拓扑位置（1 在内部，0 在边界，-1 在外部）
+        double result = cv::pointPolygonTest(polygon, center, false);
+
+        // 包含在内部 (result > 0) 或正好在边界上 (result == 0)
+        if (result >= 0)
+        {
+            // 将符合条件的框存入新的 vector
+            inside_ids.push_back(i);
+        }
+    }
+
+    return inside_ids;
+}
+
+/**
+ * @brief 在多边形区域内过滤 YOLO 检测框
+ * @param boxes YOLO 检测框的集合 (std::vector<Global::YoloDetectBox>)
+ * @param polygon 表示多边形顶点的集合 (std::vector<cv::Point>)
  * @return 在多边形内的检测框集合 (std::vector<Global::YoloDetectBox>)
  */
 std::vector<Global::YoloDetectBox> filter_boxes_in_polygon(
