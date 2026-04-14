@@ -35,7 +35,7 @@ enum class FilterLocation : int {
  * @return 拓扑位置 (-1: 在外部，0: 在边界，1: 在内部)
  */
 double boxPolygonTest(
-    Global::YoloDetectBox box,
+    const YoloDetectBox &box,
     const std::vector<cv::Point> &polygon,
     const FilterLocation filter_location = FilterLocation::Center,
     bool measureDist = false)
@@ -96,14 +96,14 @@ double boxPolygonTest(
 
 /**
  * @brief 在多边形区域内过滤 YOLO 检测框
- * @param boxes YOLO 检测框的集合 (std::vector<Global::YoloDetectBox>)
+ * @param boxes YOLO 检测框的集合 (std::vector<YoloDetectBox>)
  * @param polygon 表示多边形顶点的集合 (std::vector<cv::Point>)
  * @param inside 是否只保留多边形内部的检测框 (bool，默认为 true)
  * @param filter_location 筛选位置 (FilterLocation，默认为 FilterLocation::Center)
  * @return 在多边形内的检测框 index 集合 (std::vector<int>)
  */
 std::vector<int> filter_box_ids_by_polygon(
-    const std::vector<Global::YoloDetectBox> &boxes,
+    const std::vector<YoloDetectBox> &boxes,
     const std::vector<cv::Point> &polygon,
     const bool inside = true,
     const FilterLocation filter_location = FilterLocation::Center)
@@ -148,14 +148,14 @@ std::vector<int> filter_box_ids_by_polygon(
 
 /**
  * @brief 在多边形区域内过滤 YOLO 检测框
- * @param boxes YOLO 检测框的集合 (std::vector<Global::YoloDetectBox>)
+ * @param boxes YOLO 检测框的集合 (std::vector<YoloDetectBox>)
  * @param polygon 表示多边形顶点的集合 (std::vector<cv::Point>)
  * @param inside 是否只保留多边形内部的检测框 (bool，默认为 true)
  * @param filter_location 筛选位置 (FilterLocation，默认为 FilterLocation::Center)
- * @return 在多边形内的检测框集合 (std::vector<Global::YoloDetectBox>)
+ * @return 在多边形内的检测框集合 (std::vector<YoloDetectBox>)
  */
-std::vector<Global::YoloDetectBox> filter_boxes_by_polygon(
-    const std::vector<Global::YoloDetectBox> &boxes,
+std::vector<YoloDetectBox> filter_boxes_by_polygon(
+    const std::vector<YoloDetectBox> &boxes,
     const std::vector<cv::Point> &polygon,
     const bool inside = true,
     const FilterLocation filter_location = FilterLocation::Center)
@@ -169,7 +169,7 @@ std::vector<Global::YoloDetectBox> filter_boxes_by_polygon(
         return boxes; // 直接返回原列表的拷贝
     }
 
-    std::vector<Global::YoloDetectBox> inside_boxes;
+    std::vector<YoloDetectBox> inside_boxes;
     inside_boxes.reserve(boxes.size());
 
     for (const auto &box : boxes)
@@ -228,7 +228,7 @@ void test_filter_boxes_by_polygon()
     my_polygon.push_back(cv::Point(200, 500)); // 顶点 6
 
     // 3. 模拟 YOLO 检测结果
-    std::vector<Global::YoloDetectBox> boxes;
+    std::vector<YoloDetectBox> boxes;
     // 框1：中心点 (300, 200) -> 应该在多边形内
     boxes.push_back({0, "person", 0.9f, 280, 150, 320, 250});
     // 框2：中心点 (100, 400) -> 应该在多边形外 (左下角空白处)
