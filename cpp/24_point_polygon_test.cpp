@@ -200,8 +200,8 @@ std::vector<YoloDetectBox> filter_boxes_by_polygon(
 void draw_closed_polygon(
     cv::Mat &image,
     const std::vector<cv::Point> &polygon_points,
-    const cv::Scalar &color,
-    const int thickness)
+    const cv::Scalar &color = {0, 255, 255},
+    const int thickness = 2)
 {
     if (polygon_points.size() < 2)
         return;
