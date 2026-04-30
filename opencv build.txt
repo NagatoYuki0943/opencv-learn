@@ -18,6 +18,7 @@ x86:
         -D BUILD_opencv_js_bindings_generator=OFF \
         -D BUILD_opencv_python_bindings_generator=OFF \
         -D BUILD_opencv_python_tests=OFF \
+        -D BUILD_opencv_ts=OFF \
         -D BUILD_TESTS=OFF \
         -D WITH_FFMPEG=ON \
         -D WITH_GSTREAMER=ON
@@ -52,6 +53,7 @@ rv1126b:
         -D BUILD_opencv_js_bindings_generator=OFF \
         -D BUILD_opencv_python_bindings_generator=OFF \
         -D BUILD_opencv_python_tests=OFF \
+        -D BUILD_opencv_ts=OFF \
         -D BUILD_TESTS=OFF \
         -D WITH_FFMPEG=ON \
         -D WITH_GSTREAMER=ON \
@@ -91,6 +93,7 @@ rv1126:
         -D BUILD_opencv_python_bindings_generator=OFF \
         -D BUILD_opencv_python_tests=OFF \
         -D PYTHON3_EXECUTABLE=/usr/bin/python3 \
+        -D BUILD_opencv_ts=OFF \
         -D BUILD_TESTS=OFF \
         -D BUILD_WEBP=ON \
         -D WITH_FFMPEG=ON \
@@ -131,6 +134,7 @@ rv1106:
         -D BUILD_opencv_python_bindings_generator=OFF \
         -D BUILD_opencv_python_tests=OFF \
         -D BUILD_opencv_dnn=OFF \
+        -D BUILD_opencv_ts=OFF \
         -D BUILD_TESTS=OFF \
         -D WITH_FFMPEG=ON \
         -D WITH_GSTREAMER=ON \
